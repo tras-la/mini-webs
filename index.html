@@ -637,7 +637,9 @@
       <span id="notification-message">Sitio publicado exitosamente</span>
     </div>
 
-    <script>
+    <script type="module">
+      import { compressImageBlob, convertBlobsToBase64 } from "./utils.js";
+
       // DOM elements
       const miniSite = document.getElementById("mini-site");
       const profileImage = document.getElementById("profile-image");
@@ -684,7 +686,7 @@
       const notificationMessage = document.getElementById("notification-message");
 
       // Data storage
-      let siteData = {
+      let siteData = (window.siteData = {
         displayName: "Tu Nombre",
         username: "@tunombre",
         description: "Haz clic aquí para agregar una descripción sobre ti.",
@@ -692,7 +694,7 @@
         accentColor: "#3d3f20",
         bgColor: "#e6deca",
         links: [],
-      };
+      });
 
       let editingLinkIndex = -1; // -1 means adding a new link
 
@@ -757,10 +759,12 @@
       // File upload handling
       profileImageFile.addEventListener("change", function () {
         if (this.files && this.files[0]) {
+          const file = this.files[0];
           const reader = new FileReader();
-          reader.onload = function (e) {
-            siteData.profileImage = e.target.result;
-            profileImage.src = siteData.profileImage;
+          reader.onload = async function (e) {
+            const compressedBlob = await compressImageBlob(file);
+            siteData.profileImage = (await convertBlobsToBase64([compressedBlob]))[0];
+            profileImage.src = URL.createObjectURL(compressedBlob);
             profileImage.style.display = "block";
             profilePlaceholder.style.display = "none";
             fileInputLabel.textContent = "Imagen actualizada";
@@ -852,6 +856,11 @@
         // Validate required fields
         if (siteData.displayName === "Tu Nombre" || siteData.username === "@tunombre") {
           showNotification("Por favor, completa al menos tu nombre y usuario", "error");
+          return;
+        }
+
+        if (siteData.description.includes("agregar una descripción")) {
+          showNotification("Por favor, agrega una descripción", "error");
           return;
         }
 

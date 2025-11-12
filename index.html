@@ -7,8 +7,10 @@
     <meta name="color-scheme" content="light only" />
     <title>Creá tu sitio web en Trasla</title>
     <meta name="description" content="Creá tu mini sitio web gratis en Trasla." />
-    <meta property="og:title" content="Mini Sitios Trasla" />
+    <meta property="og:title" content="Mi Sitio Web en Trasla" />
     <meta property="og:description" content="Creá tu mini sitio web gratis en Trasla." />
+    <meta property="og:locale" content="es-AR" />
+
     <style>
       :root {
         --primary: #3d3f20;
@@ -512,7 +514,8 @@
     <div class="container">
       <header>
         <h1>Creá tu mini sitio web en Trasla</h1>
-        <p class="subtitle">Ideal para personas o emprendimientos. Haz clic en cualquier elemento para editarlo.</p>
+        <p class="subtitle">Tu lugar en la web para mostrar lo que hacés.</p>
+        <em>Hacé click en el elemento para editarlo.</em>
       </header>
 
       <div class="mini-site" id="mini-site">
@@ -554,7 +557,7 @@
 
       <div class="actions">
         <button id="publish-btn">
-          <span id="publish-text">Publicar mi sitio</span>
+          <span id="publish-text">Crear Sitio</span>
           <span id="publish-spinner" class="spinner" style="display: none"></span>
         </button>
       </div>
@@ -566,7 +569,7 @@
         <h3>Cambiar imagen de perfil</h3>
         <div class="form-group">
           <div class="file-input-container">
-            <div class="file-input-label" id="file-input-label">Haz clic aquí para subir una imagen</div>
+            <div class="file-input-label" id="file-input-label">Hacé click acá para subir una imagen</div>
             <input type="file" class="file-input" id="profile-image-file" accept="image/*" />
           </div>
         </div>
@@ -578,10 +581,10 @@
 
     <div class="modal" id="name-modal">
       <div class="modal-content">
-        <h3>Editar nombre</h3>
+        <h3>Editar Nombre</h3>
         <div class="form-group">
           <label for="edit-name">Nombre público</label>
-          <input type="text" id="edit-name" placeholder="Ej: Sofía Torres" />
+          <input type="text" id="edit-name" placeholder="Trasla Eventos" />
         </div>
         <div class="modal-actions">
           <button class="secondary" id="cancel-name">Cancelar</button>
@@ -592,13 +595,13 @@
 
     <div class="modal" id="username-modal">
       <div class="modal-content">
-        <h3>Editar usuario / url del sitio</h3>
+        <h3>URL (@usuario) del sitio</h3>
         <div class="form-group">
-          <label for="edit-username" id="editUsernameLabel">trasla.com.ar/</label>
+          <label for="edit-username" id="editUsernameLabel">trasla.com.ar/traslaeventos</label>
           <input
             type="text"
             id="edit-username"
-            placeholder="Ej: sofiatorres"
+            placeholder="traslaeventos"
             onkeyup="editUsernameLabel.textContent= `trasla.com.ar/${event.target.value}`"
           />
         </div>
@@ -611,10 +614,10 @@
 
     <div class="modal" id="description-modal">
       <div class="modal-content">
-        <h3>Editar descripción</h3>
+        <h3>Editar Descripción</h3>
         <div class="form-group">
-          <label for="edit-description">Descripción breve</label>
-          <textarea id="edit-description" placeholder="Contá brevemente quién sos o qué hacés..."></textarea>
+          <label for="edit-description">¿De qué se trata el sitio?</label>
+          <textarea id="edit-description" placeholder=""></textarea>
         </div>
         <div class="modal-actions">
           <button class="secondary" id="cancel-description">Cancelar</button>
@@ -697,12 +700,12 @@
 
       // Data storage
       let siteData = (window.siteData = {
-        displayName: "Tu Nombre",
-        username: "@tunombre",
-        description: "Haz clic aquí para agregar una descripción sobre ti.",
+        displayName: "",
+        username: "",
+        description: "",
         profileImage: "",
-        accentColor: "#3d3f20",
-        bgColor: "#e6deca",
+        accentColor: "", //#3d3f20",
+        bgColor: "", //#e6deca",
         links: [],
       });
 
@@ -863,12 +866,12 @@
       // Publish functionality
       publishBtn.addEventListener("click", async function () {
         // Validate required fields
-        if (siteData.displayName === "Tu Nombre" || siteData.username === "@tunombre") {
+        if (!siteData.displayName || !siteData.username) {
           showNotification("Por favor, completa al menos tu nombre y usuario", "error");
           return;
         }
 
-        if (siteData.description.includes("agregar una descripción")) {
+        if (!siteData.description) {
           showNotification("Por favor, agrega una descripción", "error");
           return;
         }

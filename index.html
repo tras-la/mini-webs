@@ -587,10 +587,15 @@
 
     <div class="modal" id="username-modal">
       <div class="modal-content">
-        <h3>Editar usuario</h3>
+        <h3>Editar usuario / url del sitio</h3>
         <div class="form-group">
-          <label for="edit-username">Usuario / enlace corto</label>
-          <input type="text" id="edit-username" placeholder="Ej: sofiatorres" />
+          <label for="edit-username" id="editUsernameLabel">trasla.com.ar/</label>
+          <input
+            type="text"
+            id="edit-username"
+            placeholder="Ej: sofiatorres"
+            onkeyup="editUsernameLabel.textContent= `trasla.com.ar/${event.target.value}`"
+          />
         </div>
         <div class="modal-actions">
           <button class="secondary" id="cancel-username">Cancelar</button>
@@ -719,7 +724,6 @@
       });
 
       username.addEventListener("click", () => {
-        editUsername.value = siteData.username.replace("@", "");
         usernameModal.style.display = "flex";
         miniSite.classList.add("editing");
       });

@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creá tu Trasla Mini Site</title>
+    <style>
+      :root {
+        --primary: #3d3f20;
+        --primary-light: #3d3f20;
+        --secondary: #000;
+        --danger: #d32f2f;
+        --text: #222;
+        --text-light: #666;
+        --bg: #ffbe6f;
+        --white: #fafafa;
+        --border: #ccc;
+        --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        --radius: 10px;
+        --bg-color: var(--white);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background: var(--bg-color);
+        color: var(--text);
+        margin: 0;
+        padding: 2rem;
+        line-height: 1.5;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+
+      h1 {
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .subtitle {
+        color: var(--text-light);
+        font-size: 1.1rem;
+      }
+
+      .mini-site {
+        background: var(--white);
+        border-radius: var(--radius);
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        text-align: center;
+        transition: all 0.3s ease;
+        min-height: 500px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: var(--bg);
+      }
+
+      .mini-site.editing {
+        box-shadow: 0 0 0 3px var(--primary);
+      }
+
+      .profile-image-container {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 1rem;
+      }
+
+      .mini-site img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid var(--primary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .mini-site img:hover {
+        opacity: 0.8;
+      }
+
+      .profile-placeholder {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 3px solid var(--primary);
+        background: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 2.5rem;
+        color: var(--primary);
+      }
+
+      .profile-placeholder:hover {
+        background: #e0e0e0;
+      }
+
+      .mini-site h2 {
+        margin-bottom: 0.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 4px;
+        transition: background 0.2s;
+      }
+
+      .mini-site h2:hover {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      .mini-site .username {
+        color: var(--text-light);
+        margin-bottom: 1rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 4px;
+        transition: background 0.2s;
+      }
+
+      .mini-site .username:hover {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      .mini-site .description {
+        margin-bottom: 2rem;
+        line-height: 1.6;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 4px;
+        transition: background 0.2s;
+      }
+
+      .mini-site .description:hover {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      .mini-site .links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-bottom: 2rem;
+      }
+
+      .mini-site .link-button {
+        display: block;
+        padding: 0.75rem 1.5rem;
+        background: var(--primary);
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: background-color 0.2s;
+        cursor: pointer;
+      }
+
+      .mini-site .link-button:hover {
+        background: var(--primary-light);
+      }
+
+      .mini-site .add-link {
+        background: transparent;
+        border: 2px dashed var(--border);
+        color: var(--text-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .mini-site .add-link:hover {
+        background: rgba(0, 0, 0, 0.05);
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      .actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        background: var(--primary);
+        color: var(--white);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s, transform 0.1s;
+      }
+
+      button:hover {
+        background: var(--primary-light);
+      }
+
+      button:active {
+        transform: translateY(1px);
+      }
+
+      button.secondary {
+        background: var(--secondary);
+      }
+
+      button.secondary:hover {
+        background: #005fa3;
+      }
+
+      button:disabled {
+        background: var(--text-light);
+        cursor: not-allowed;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 100;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-content {
+        background: var(--white);
+        border-radius: var(--radius);
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        width: 90%;
+        max-width: 500px;
+      }
+
+      .modal h3 {
+        margin-top: 0;
+        color: var(--primary);
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 0.75rem;
+        font-size: 1rem;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        transition: border-color 0.2s;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(129, 61, 156, 0.2);
+      }
+
+      .form-group textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+      }
+
+      .file-input-container {
+        position: relative;
+      }
+
+      .file-input {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+      }
+
+      .file-input-label {
+        display: block;
+        padding: 0.75rem;
+        background: #f5f5f5;
+        border: 1px dashed var(--border);
+        border-radius: 6px;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .file-input-label:hover {
+        background: #eeeeee;
+      }
+
+      .link-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+        padding: 0.5rem;
+        border-radius: 6px;
+        transition: background 0.2s;
+      }
+
+      .link-item:hover {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      .link-item .link-text {
+        flex: 1;
+        text-align: left;
+      }
+
+      .link-item .link-actions {
+        display: flex;
+        gap: 0.25rem;
+      }
+
+      .link-item button {
+        padding: 0.25rem 0.5rem;
+        background: transparent;
+        color: var(--text-light);
+      }
+
+      .link-item button:hover {
+        background: rgba(0, 0, 0, 0.1);
+      }
+
+      .link-item button.remove {
+        color: var(--danger);
+      }
+
+      .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 1rem 1.5rem;
+        border-radius: var(--radius);
+        background: var(--white);
+        box-shadow: var(--shadow);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        z-index: 1000;
+        transform: translateX(150%);
+        transition: transform 0.3s ease;
+      }
+
+      .notification.show {
+        transform: translateX(0);
+      }
+
+      .notification.success {
+        border-left: 4px solid var(--primary);
+      }
+
+      .notification.error {
+        border-left: 4px solid var(--danger);
+      }
+
+      .spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: var(--white);
+        animation: spin 1s ease-in-out infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .color-picker-container {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .color-picker {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .color-picker label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text);
+      }
+
+      .color-picker input[type="color"] {
+        width: 60px;
+        height: 60px;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        padding: 0;
+        background: transparent;
+      }
+
+      .color-picker input[type="color"]::-webkit-color-swatch {
+        border: none;
+        border-radius: 50%;
+        padding: 0;
+      }
+
+      .color-picker input[type="color"]::-webkit-color-swatch-wrapper {
+        border: none;
+        border-radius: 50%;
+        padding: 0;
+      }
+
+      .color-preview {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+      }
+
+      .color-sample {
+        width: 20px;
+        height: 20px;
+        border-radius: 4px;
+        border: 1px solid var(--border);
+      }
+
+      .color-value {
+        font-size: 0.75rem;
+        color: var(--text-light);
+      }
+
+      @media (max-width: 600px) {
+        body {
+          padding: 1rem;
+        }
+
+        .mini-site {
+          padding: 1.5rem;
+        }
+
+        .actions {
+          flex-direction: column;
+        }
+
+        button {
+          width: 100%;
+        }
+
+        .notification {
+          right: 10px;
+          left: 10px;
+          transform: translateY(-150%);
+        }
+
+        .notification.show {
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Trasla Mini Site</h1>
+        <p class="subtitle">Crea tu sitio personal en segundos. Haz clic en cualquier elemento para editarlo.</p>
+      </header>
+
+      <div class="mini-site" id="mini-site">
+        <div class="profile-image-container">
+          <div class="profile-placeholder" id="profile-placeholder">👤</div>
+          <img src="" alt="Tu imagen de perfil" id="profile-image" style="display: none" />
+        </div>
+
+        <h2 id="display-name">Tu Nombre</h2>
+        <div class="username" id="username">@tunombre</div>
+        <div class="description" id="description">Haz clic aquí para agregar una descripción sobre ti.</div>
+
+        <div class="links" id="links-container">
+          <!-- Links will be added here dynamically -->
+          <div class="link-button add-link" id="add-first-link">
+            <span>+ Agregar enlace</span>
+          </div>
+        </div>
+      </div>
+      <div class="color-picker-container">
+        <div class="color-picker">
+          <label for="accent-color">Color principal</label>
+          <input type="color" id="accent-color" value="#3d3f20" />
+          <div class="color-preview">
+            <div class="color-sample" id="accent-sample" style="background-color: #3d3f20"></div>
+            <span class="color-value" id="accent-value">#3d3f20</span>
+          </div>
+        </div>
+
+        <div class="color-picker">
+          <label for="bg-color">Fondo</label>
+          <input type="color" id="bg-color" value="#e6deca" />
+          <div class="color-preview">
+            <div class="color-sample" id="bg-sample" style="background-color: #e6deca"></div>
+            <span class="color-value" id="bg-value">#e6deca</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="publish-btn">
+          <span id="publish-text">Publicar mi sitio</span>
+          <span id="publish-spinner" class="spinner" style="display: none"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Modals for editing -->
+    <div class="modal" id="image-modal">
+      <div class="modal-content">
+        <h3>Cambiar imagen de perfil</h3>
+        <div class="form-group">
+          <div class="file-input-container">
+            <div class="file-input-label" id="file-input-label">Haz clic aquí para subir una imagen</div>
+            <input type="file" class="file-input" id="profile-image-file" accept="image/*" />
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button class="secondary" id="cancel-image">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="name-modal">
+      <div class="modal-content">
+        <h3>Editar nombre</h3>
+        <div class="form-group">
+          <label for="edit-name">Nombre público</label>
+          <input type="text" id="edit-name" placeholder="Ej: Sofía Torres" />
+        </div>
+        <div class="modal-actions">
+          <button class="secondary" id="cancel-name">Cancelar</button>
+          <button id="save-name">Guardar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="username-modal">
+      <div class="modal-content">
+        <h3>Editar usuario</h3>
+        <div class="form-group">
+          <label for="edit-username">Usuario / enlace corto</label>
+          <input type="text" id="edit-username" placeholder="Ej: sofiatorres" />
+        </div>
+        <div class="modal-actions">
+          <button class="secondary" id="cancel-username">Cancelar</button>
+          <button id="save-username">Guardar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="description-modal">
+      <div class="modal-content">
+        <h3>Editar descripción</h3>
+        <div class="form-group">
+          <label for="edit-description">Descripción breve</label>
+          <textarea id="edit-description" placeholder="Contá brevemente quién sos o qué hacés..."></textarea>
+        </div>
+        <div class="modal-actions">
+          <button class="secondary" id="cancel-description">Cancelar</button>
+          <button id="save-description">Guardar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="link-modal">
+      <div class="modal-content">
+        <h3 id="link-modal-title">Agregar enlace</h3>
+        <div class="form-group">
+          <label for="edit-link-label">Texto del enlace</label>
+          <input type="text" id="edit-link-label" placeholder="Ej: Instagram, Mi portfolio, etc." />
+        </div>
+        <div class="form-group">
+          <label for="edit-link-url">URL</label>
+          <input type="url" id="edit-link-url" placeholder="https://..." />
+        </div>
+        <div class="modal-actions">
+          <button class="secondary" id="cancel-link">Cancelar</button>
+          <button id="save-link">Guardar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+      <span id="notification-icon">✅</span>
+      <span id="notification-message">Sitio publicado exitosamente</span>
+    </div>
+
+    <script>
+      // DOM elements
+      const miniSite = document.getElementById("mini-site");
+      const profileImage = document.getElementById("profile-image");
+      const profilePlaceholder = document.getElementById("profile-placeholder");
+      const displayName = document.getElementById("display-name");
+      const username = document.getElementById("username");
+      const description = document.getElementById("description");
+      const linksContainer = document.getElementById("links-container");
+      const addFirstLink = document.getElementById("add-first-link");
+
+      // Color pickers
+      const accentColorPicker = document.getElementById("accent-color");
+      const bgColorPicker = document.getElementById("bg-color");
+      const accentSample = document.getElementById("accent-sample");
+      const bgSample = document.getElementById("bg-sample");
+      const accentValue = document.getElementById("accent-value");
+      const bgValue = document.getElementById("bg-value");
+
+      // Modals
+      const imageModal = document.getElementById("image-modal");
+      const nameModal = document.getElementById("name-modal");
+      const usernameModal = document.getElementById("username-modal");
+      const descriptionModal = document.getElementById("description-modal");
+      const linkModal = document.getElementById("link-modal");
+
+      // Modal inputs
+      const editName = document.getElementById("edit-name");
+      const editUsername = document.getElementById("edit-username");
+      const editDescription = document.getElementById("edit-description");
+      const editLinkLabel = document.getElementById("edit-link-label");
+      const editLinkUrl = document.getElementById("edit-link-url");
+      const linkModalTitle = document.getElementById("link-modal-title");
+
+      // Buttons
+      const publishBtn = document.getElementById("publish-btn");
+      const publishText = document.getElementById("publish-text");
+      const publishSpinner = document.getElementById("publish-spinner");
+      const profileImageFile = document.getElementById("profile-image-file");
+      const fileInputLabel = document.getElementById("file-input-label");
+
+      // Notification
+      const notification = document.getElementById("notification");
+      const notificationIcon = document.getElementById("notification-icon");
+      const notificationMessage = document.getElementById("notification-message");
+
+      // Data storage
+      let siteData = {
+        displayName: "Tu Nombre",
+        username: "@tunombre",
+        description: "Haz clic aquí para agregar una descripción sobre ti.",
+        profileImage: "",
+        accentColor: "#3d3f20",
+        bgColor: "#e6deca",
+        links: [],
+      };
+
+      let editingLinkIndex = -1; // -1 means adding a new link
+
+      // API endpoint placeholder
+      const PUBLISH_ENDPOINT = "YOUR_API_ENDPOINT_HERE"; // Replace with actual endpoint
+
+      // Event listeners for editable elements
+      profilePlaceholder.addEventListener("click", () => {
+        imageModal.style.display = "flex";
+        miniSite.classList.add("editing");
+      });
+
+      profileImage.addEventListener("click", () => {
+        imageModal.style.display = "flex";
+        miniSite.classList.add("editing");
+      });
+
+      displayName.addEventListener("click", () => {
+        editName.value = siteData.displayName;
+        nameModal.style.display = "flex";
+        miniSite.classList.add("editing");
+      });
+
+      username.addEventListener("click", () => {
+        editUsername.value = siteData.username.replace("@", "");
+        usernameModal.style.display = "flex";
+        miniSite.classList.add("editing");
+      });
+
+      description.addEventListener("click", () => {
+        editDescription.value = siteData.description;
+        descriptionModal.style.display = "flex";
+        miniSite.classList.add("editing");
+      });
+
+      addFirstLink.addEventListener("click", () => {
+        editLinkLabel.value = "";
+        editLinkUrl.value = "";
+        editingLinkIndex = -1;
+        linkModalTitle.textContent = "Agregar enlace";
+        linkModal.style.display = "flex";
+        miniSite.classList.add("editing");
+      });
+
+      // Color picker event listeners
+      accentColorPicker.addEventListener("input", (e) => {
+        const color = e.target.value;
+        siteData.accentColor = color;
+        accentSample.style.backgroundColor = color;
+        accentValue.textContent = color;
+        updateColors();
+      });
+
+      bgColorPicker.addEventListener("input", (e) => {
+        const color = e.target.value;
+        siteData.bgColor = color;
+        bgSample.style.backgroundColor = color;
+        bgValue.textContent = color;
+        updateColors();
+      });
+
+      // File upload handling
+      profileImageFile.addEventListener("change", function () {
+        if (this.files && this.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            siteData.profileImage = e.target.result;
+            profileImage.src = siteData.profileImage;
+            profileImage.style.display = "block";
+            profilePlaceholder.style.display = "none";
+            fileInputLabel.textContent = "Imagen actualizada";
+            setTimeout(() => {
+              imageModal.style.display = "none";
+              miniSite.classList.remove("editing");
+            }, 1000);
+          };
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+
+      // Modal save actions
+      document.getElementById("save-name").addEventListener("click", () => {
+        if (editName.value.trim()) {
+          siteData.displayName = editName.value.trim();
+          displayName.textContent = siteData.displayName;
+          nameModal.style.display = "none";
+          miniSite.classList.remove("editing");
+        }
+      });
+
+      document.getElementById("save-username").addEventListener("click", () => {
+        if (editUsername.value.trim()) {
+          const user = editUsername.value.trim().startsWith("@")
+            ? editUsername.value.trim()
+            : "@" + editUsername.value.trim();
+          siteData.username = user;
+          username.textContent = siteData.username;
+          usernameModal.style.display = "none";
+          miniSite.classList.remove("editing");
+        }
+      });
+
+      document.getElementById("save-description").addEventListener("click", () => {
+        siteData.description = editDescription.value.trim() || siteData.description;
+        description.textContent = siteData.description;
+        descriptionModal.style.display = "none";
+        miniSite.classList.remove("editing");
+      });
+
+      document.getElementById("save-link").addEventListener("click", () => {
+        const label = editLinkLabel.value.trim();
+        const url = editLinkUrl.value.trim();
+
+        if (label && url) {
+          if (editingLinkIndex === -1) {
+            // Add new link
+            siteData.links.push({ label, url });
+          } else {
+            // Update existing link
+            siteData.links[editingLinkIndex] = { label, url };
+          }
+
+          renderLinks();
+          linkModal.style.display = "none";
+          miniSite.classList.remove("editing");
+        }
+      });
+
+      // Modal cancel actions
+      document.getElementById("cancel-image").addEventListener("click", () => {
+        imageModal.style.display = "none";
+        miniSite.classList.remove("editing");
+      });
+
+      document.getElementById("cancel-name").addEventListener("click", () => {
+        nameModal.style.display = "none";
+        miniSite.classList.remove("editing");
+      });
+
+      document.getElementById("cancel-username").addEventListener("click", () => {
+        usernameModal.style.display = "none";
+        miniSite.classList.remove("editing");
+      });
+
+      document.getElementById("cancel-description").addEventListener("click", () => {
+        descriptionModal.style.display = "none";
+        miniSite.classList.remove("editing");
+      });
+
+      document.getElementById("cancel-link").addEventListener("click", () => {
+        linkModal.style.display = "none";
+        miniSite.classList.remove("editing");
+      });
+
+      // Publish functionality
+      publishBtn.addEventListener("click", async function () {
+        // Validate required fields
+        if (siteData.displayName === "Tu Nombre" || siteData.username === "@tunombre") {
+          showNotification("Por favor, completa al menos tu nombre y usuario", "error");
+          return;
+        }
+
+        // Show loading state
+        publishBtn.disabled = true;
+        publishText.textContent = "Publicando...";
+        publishSpinner.style.display = "inline-block";
+
+        try {
+          // Prepare data for API
+          const publishData = {
+            displayName: siteData.displayName,
+            username: siteData.username.replace("@", ""),
+            description: siteData.description,
+            profileImage: siteData.profileImage,
+            accentColor: siteData.accentColor,
+            bgColor: siteData.bgColor,
+            links: siteData.links,
+          };
+
+          // Send data to API
+          const response = await publishToAPI(publishData);
+
+          // Show success message
+          showNotification("¡Tu sitio ha sido publicado exitosamente!", "success");
+        } catch (error) {
+          // Show error message
+          console.error("Error publishing site:", error);
+          showNotification("Error al publicar el sitio. Intenta nuevamente.", "error");
+        } finally {
+          // Reset button state
+          publishBtn.disabled = false;
+          publishText.textContent = "Publicar mi sitio";
+          publishSpinner.style.display = "none";
+        }
+      });
+
+      // Helper functions
+      function renderLinks() {
+        // Clear existing links (except the add button)
+        while (linksContainer.firstChild) {
+          linksContainer.removeChild(linksContainer.firstChild);
+        }
+
+        // Render all links
+        siteData.links.forEach((link, index) => {
+          const linkItem = document.createElement("div");
+          linkItem.className = "link-item";
+          linkItem.innerHTML = `
+        <div class="link-text">
+          <a href="${link.url}" class="link-button" target="_blank" onclick="event.stopPropagation();">${link.label}</a>
+        </div>
+        <div class="link-actions">
+          <button class="edit" title="Editar enlace">✏️</button>
+          <button class="remove" title="Eliminar enlace">🗑️</button>
+        </div>
+      `;
+
+          // Add event listeners for edit and remove
+          linkItem.querySelector(".edit").addEventListener("click", (e) => {
+            e.stopPropagation();
+            editLinkLabel.value = link.label;
+            editLinkUrl.value = link.url;
+            editingLinkIndex = index;
+            linkModalTitle.textContent = "Editar enlace";
+            linkModal.style.display = "flex";
+            miniSite.classList.add("editing");
+          });
+
+          linkItem.querySelector(".remove").addEventListener("click", (e) => {
+            e.stopPropagation();
+            siteData.links.splice(index, 1);
+            renderLinks();
+          });
+
+          linksContainer.appendChild(linkItem);
+        });
+
+        // Add the "Add link" button at the end
+        const addLinkBtn = document.createElement("div");
+        addLinkBtn.className = "link-button add-link";
+        addLinkBtn.innerHTML = "<span>+ Agregar enlace</span>";
+        addLinkBtn.addEventListener("click", () => {
+          editLinkLabel.value = "";
+          editLinkUrl.value = "";
+          editingLinkIndex = -1;
+          linkModalTitle.textContent = "Agregar enlace";
+          linkModal.style.display = "flex";
+          miniSite.classList.add("editing");
+        });
+
+        linksContainer.appendChild(addLinkBtn);
+      }
+
+      // Update colors based on user selection
+      function updateColors() {
+        // Update CSS custom properties
+        document.documentElement.style.setProperty("--primary", siteData.accentColor);
+        document.documentElement.style.setProperty("--primary-light", lightenColor(siteData.accentColor, 20));
+        document.documentElement.style.setProperty("--bg", siteData.bgColor);
+
+        // Update the mini-site background only
+        miniSite.style.backgroundColor = siteData.bgColor;
+
+        // Update profile image border and placeholder
+        profileImage.style.borderColor = siteData.accentColor;
+        profilePlaceholder.style.borderColor = siteData.accentColor;
+        profilePlaceholder.style.color = siteData.accentColor;
+      }
+
+      // Helper function to lighten a color
+      function lightenColor(color, percent) {
+        const num = parseInt(color.replace("#", ""), 16),
+          amt = Math.round(2.55 * percent),
+          R = (num >> 16) + amt,
+          G = ((num >> 8) & 0x00ff) + amt,
+          B = (num & 0x0000ff) + amt;
+
+        return (
+          "#" +
+          (
+            0x1000000 +
+            (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 +
+            (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 +
+            (B < 255 ? (B < 1 ? 0 : B) : 255)
+          )
+            .toString(16)
+            .slice(1)
+        );
+      }
+
+      // API publishing function
+      async function publishToAPI(data) {
+        // Replace PUBLISH_ENDPOINT with your actual API endpoint
+        const endpoint = PUBLISH_ENDPOINT;
+
+        if (endpoint === "YOUR_API_ENDPOINT_HERE") {
+          // Simulate API call for demonstration
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              console.log("Data to be sent to API:", JSON.stringify(data, null, 2));
+              resolve({ success: true, id: "demo-site-id" });
+            }, 1500);
+          });
+        }
+
+        // Actual API call when endpoint is provided
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+          throw new Error(`API error: ${response.status}`);
+        }
+
+        return response.json();
+      }
+
+      // Notification function
+      function showNotification(message, type = "success") {
+        notificationMessage.textContent = message;
+
+        if (type === "success") {
+          notification.className = "notification success";
+          notificationIcon.textContent = "✅";
+        } else {
+          notification.className = "notification error";
+          notificationIcon.textContent = "❌";
+        }
+
+        notification.classList.add("show");
+
+        setTimeout(() => {
+          notification.classList.remove("show");
+        }, 5000);
+      }
+
+      // Initialize the page
+      renderLinks();
+      updateColors();
+    </script>
+  </body>
+</html>

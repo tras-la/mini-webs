@@ -179,7 +179,7 @@
       }
 
       .mini-site .link-button:hover {
-        background: var(--primary-light);
+        background: rgba(0, 0, 0, 0.3);
       }
 
       .mini-site .add-link {
@@ -518,132 +518,133 @@
         <em>Hacé click en el elemento para editarlo.</em>
       </header>
 
-      <div class="mini-site" id="mini-site">
-        <div class="profile-image-container">
-          <div class="profile-placeholder" id="profile-placeholder">👤</div>
-          <img src="" alt="Tu imagen de perfil" id="profile-image" style="display: none" />
-        </div>
+      <form disabled>
+        <div class="mini-site" id="mini-site">
+          <div class="profile-image-container">
+            <div class="profile-placeholder" id="profile-placeholder">👤</div>
+            <img src="" alt="Tu imagen de perfil" id="profile-image" style="display: none" />
+          </div>
 
-        <h2 id="display-name">Tu Nombre</h2>
-        <div class="username" id="username">@tunombre</div>
-        <div class="description" id="description">Haz clic aquí para agregar una descripción sobre ti.</div>
+          <h2 id="display-name">Tu Nombre</h2>
+          <div class="username" id="username">@tunombre</div>
+          <div class="description" id="description">Haz clic aquí para agregar una descripción sobre ti.</div>
 
-        <div class="links" id="links-container">
-          <!-- Links will be added here dynamically -->
-          <div class="link-button add-link" id="add-first-link">
-            <span>+ Agregar enlace</span>
+          <div class="links" id="links-container">
+            <!-- Links will be added here dynamically -->
+            <div class="link-button add-link" id="add-first-link">
+              <span>+ Agregar enlace</span>
+            </div>
+          </div>
+          <div class="color-picker-container">
+            <div class="color-picker">
+              <label for="accent-color">Color de acento</label>
+              <input type="color" id="accent-color" value="#3d3f20" name="accent-color" />
+              <div class="color-preview">
+                <div class="color-sample" id="accent-sample" style="background-color: #3d3f20"></div>
+                <span class="color-value" id="accent-value">#3d3f20</span>
+              </div>
+            </div>
+
+            <div class="color-picker">
+              <label for="bg-color">Color de fondo</label>
+              <input type="color" id="bg-color" value="#e6deca" name="bg-color" />
+              <div class="color-preview">
+                <div class="color-sample" id="bg-sample" style="background-color: #e6deca"></div>
+                <span class="color-value" id="bg-value">#e6deca</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="submit" id="publish-btn">
+              <span id="publish-text">Crear Sitio</span>
+              <span id="publish-spinner" class="spinner" style="display: none"></span>
+            </button>
           </div>
         </div>
-      </div>
-      <div class="color-picker-container">
-        <div class="color-picker">
-          <label for="accent-color">Color de acento</label>
-          <input type="color" id="accent-color" value="#3d3f20" />
-          <div class="color-preview">
-            <div class="color-sample" id="accent-sample" style="background-color: #3d3f20"></div>
-            <span class="color-value" id="accent-value">#3d3f20</span>
+
+        <!-- Modals for editing -->
+        <div class="modal" id="image-modal">
+          <div class="modal-content">
+            <h3>Cambiar imagen de perfil</h3>
+            <div class="form-group">
+              <div class="file-input-container">
+                <div class="file-input-label" id="file-input-label">Hacé click acá para subir una imagen</div>
+                <input type="file" class="file-input" id="profile-image-file" accept="image/*" name="profile-image" />
+              </div>
+            </div>
+            <div class="modal-actions">
+              <button type="button" class="secondary" id="cancel-image">Cancelar</button>
+            </div>
           </div>
         </div>
 
-        <div class="color-picker">
-          <label for="bg-color">Color de fondo</label>
-          <input type="color" id="bg-color" value="#e6deca" />
-          <div class="color-preview">
-            <div class="color-sample" id="bg-sample" style="background-color: #e6deca"></div>
-            <span class="color-value" id="bg-value">#e6deca</span>
+        <div class="modal" id="name-modal">
+          <div class="modal-content">
+            <h3>Editar Nombre</h3>
+            <div class="form-group">
+              <label for="edit-name">Nombre público</label>
+              <input type="text" id="edit-name" placeholder="Trasla Eventos" name="name" />
+            </div>
+            <div class="modal-actions">
+              <button type="button" class="secondary" id="cancel-name">Cancelar</button>
+              <button type="button" id="save-name">Guardar</button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="actions">
-        <button id="publish-btn">
-          <span id="publish-text">Crear Sitio</span>
-          <span id="publish-spinner" class="spinner" style="display: none"></span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Modals for editing -->
-    <div class="modal" id="image-modal">
-      <div class="modal-content">
-        <h3>Cambiar imagen de perfil</h3>
-        <div class="form-group">
-          <div class="file-input-container">
-            <div class="file-input-label" id="file-input-label">Hacé click acá para subir una imagen</div>
-            <input type="file" class="file-input" id="profile-image-file" accept="image/*" />
+        <div class="modal" id="username-modal">
+          <div class="modal-content">
+            <h3>URL (@usuario) del sitio</h3>
+            <div class="form-group">
+              <label for="edit-username" id="editUsernameLabel">trasla.com.ar/traslaeventos</label>
+              <input type="text" id="edit-username" name="username" placeholder="traslaeventos" />
+            </div>
+            <div class="modal-actions">
+              <button type="button" class="secondary" id="cancel-username">Cancelar</button>
+              <button type="button" id="save-username">Guardar</button>
+            </div>
           </div>
         </div>
-        <div class="modal-actions">
-          <button class="secondary" id="cancel-image">Cancelar</button>
-        </div>
-      </div>
-    </div>
 
-    <div class="modal" id="name-modal">
-      <div class="modal-content">
-        <h3>Editar Nombre</h3>
-        <div class="form-group">
-          <label for="edit-name">Nombre público</label>
-          <input type="text" id="edit-name" placeholder="Trasla Eventos" />
+        <div class="modal" id="description-modal">
+          <div class="modal-content">
+            <h3>Editar Descripción</h3>
+            <div class="form-group">
+              <label for="edit-description">¿De qué se trata el sitio?</label>
+              <textarea id="edit-description" placeholder="" name="description"></textarea>
+            </div>
+            <div class="modal-actions">
+              <button type="button" class="secondary" id="cancel-description">Cancelar</button>
+              <button type="button" id="save-description">Guardar</button>
+            </div>
+          </div>
         </div>
-        <div class="modal-actions">
-          <button class="secondary" id="cancel-name">Cancelar</button>
-          <button id="save-name">Guardar</button>
-        </div>
-      </div>
-    </div>
 
-    <div class="modal" id="username-modal">
-      <div class="modal-content">
-        <h3>URL (@usuario) del sitio</h3>
-        <div class="form-group">
-          <label for="edit-username" id="editUsernameLabel">trasla.com.ar/traslaeventos</label>
-          <input
-            type="text"
-            id="edit-username"
-            placeholder="traslaeventos"
-            onkeyup="editUsernameLabel.textContent= `trasla.com.ar/${event.target.value}`"
-          />
+        <div class="modal" id="link-modal">
+          <div class="modal-content">
+            <h3 id="link-modal-title">Agregar enlace</h3>
+            <div class="form-group">
+              <label for="edit-link-label">Texto del enlace</label>
+              <input
+                type="text"
+                id="edit-link-label"
+                placeholder="Ej: Instagram, Mi portfolio, etc."
+                name="link-label"
+              />
+            </div>
+            <div class="form-group">
+              <label for="edit-link-url">URL</label>
+              <input type="text" id="edit-link-url" placeholder="https://..." name="link-url" />
+            </div>
+            <div class="modal-actions">
+              <button type="button" class="secondary" id="cancel-link">Cancelar</button>
+              <button type="button" id="save-link">Guardar</button>
+            </div>
+          </div>
         </div>
-        <div class="modal-actions">
-          <button class="secondary" id="cancel-username">Cancelar</button>
-          <button id="save-username">Guardar</button>
-        </div>
-      </div>
+      </form>
     </div>
-
-    <div class="modal" id="description-modal">
-      <div class="modal-content">
-        <h3>Editar Descripción</h3>
-        <div class="form-group">
-          <label for="edit-description">¿De qué se trata el sitio?</label>
-          <textarea id="edit-description" placeholder=""></textarea>
-        </div>
-        <div class="modal-actions">
-          <button class="secondary" id="cancel-description">Cancelar</button>
-          <button id="save-description">Guardar</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal" id="link-modal">
-      <div class="modal-content">
-        <h3 id="link-modal-title">Agregar enlace</h3>
-        <div class="form-group">
-          <label for="edit-link-label">Texto del enlace</label>
-          <input type="text" id="edit-link-label" placeholder="Ej: Instagram, Mi portfolio, etc." />
-        </div>
-        <div class="form-group">
-          <label for="edit-link-url">URL</label>
-          <input type="url" id="edit-link-url" placeholder="https://..." />
-        </div>
-        <div class="modal-actions">
-          <button class="secondary" id="cancel-link">Cancelar</button>
-          <button id="save-link">Guardar</button>
-        </div>
-      </div>
-    </div>
-
     <!-- Notification -->
     <div class="notification" id="notification">
       <span id="notification-icon">✅</span>
@@ -651,7 +652,7 @@
     </div>
 
     <script type="module">
-      import { compressImageBlob, convertBlobsToBase64 } from "./utils.js";
+      import { compressImageBlob, convertBlobsToBase64, convertBlobToDataURI } from "./utils.js";
 
       // DOM elements
       const miniSite = document.getElementById("mini-site");
@@ -662,6 +663,7 @@
       const description = document.getElementById("description");
       const linksContainer = document.getElementById("links-container");
       const addFirstLink = document.getElementById("add-first-link");
+      const form = document.querySelector("form");
 
       // Color pickers
       const accentColorPicker = document.getElementById("accent-color");
@@ -704,15 +706,31 @@
         username: "",
         description: "",
         profileImage: "",
-        accentColor: "", //#3d3f20",
-        bgColor: "", //#e6deca",
+        accentColor: "#3d3f20",
+        bgColor: "#e6deca",
         links: [],
       });
+
+      const searchParams = new URLSearchParams(location.search);
+      if (searchParams.has("test")) {
+        siteData.displayName = "Trasla Eventos";
+        siteData.username = "traslaeventos";
+        siteData.description = "Organizamos los mejores eventos para vos.";
+        siteData.accentColor = "#3d3f20";
+        siteData.bgColor = "#e6deca";
+        siteData.links = [
+          { label: "Instagram", url: "https://instagram.com/traslaeventos" },
+          { label: "Facebook", url: "https://facebook.com/traslaeventos" },
+          { label: "Mi portfolio", url: "https://tuportfolio.com" },
+        ];
+        siteData.profileImage = ""; // base64 minimal example
+      }
 
       let editingLinkIndex = -1; // -1 means adding a new link
 
       // API endpoint placeholder
-      const PUBLISH_ENDPOINT = "YOUR_API_ENDPOINT_HERE"; // Replace with actual endpoint
+      const PUBLISH_ENDPOINT =
+        "https://script.google.com/macros/s/AKfycbwWCl32hVI3E5KDv5i5TM4Hhmzz9YuiI1DF-j5NKVN8dDs9EqGYMUkoJAROYx-PRJkYvg/exec";
 
       // Event listeners for editable elements
       profilePlaceholder.addEventListener("click", () => {
@@ -734,6 +752,11 @@
       username.addEventListener("click", () => {
         usernameModal.style.display = "flex";
         miniSite.classList.add("editing");
+      });
+
+      editUsername.addEventListener("keyup", (e) => {
+        e.target.value = e.target.value.replace(/[^a-zA-Z0-9_-]/g, ""); // Remove invalid characters
+        editUsernameLabel.textContent = `trasla.com.ar/${event.target.value}`;
       });
 
       description.addEventListener("click", () => {
@@ -775,7 +798,7 @@
           const reader = new FileReader();
           reader.onload = async function (e) {
             const compressedBlob = await compressImageBlob(file);
-            siteData.profileImage = (await convertBlobsToBase64([compressedBlob]))[0];
+            siteData.profileImage = await convertBlobToDataURI(compressedBlob);
             profileImage.src = URL.createObjectURL(compressedBlob);
             profileImage.style.display = "block";
             profilePlaceholder.style.display = "none";
@@ -800,12 +823,10 @@
       });
 
       document.getElementById("save-username").addEventListener("click", () => {
-        if (editUsername.value.trim()) {
-          const user = editUsername.value.trim().startsWith("@")
-            ? editUsername.value.trim()
-            : "@" + editUsername.value.trim();
-          siteData.username = user;
-          username.textContent = siteData.username;
+        const usernameText = editUsername.value.trim();
+        if (usernameText) {
+          siteData.username = usernameText;
+          username.textContent = usernameText.startsWith("@") ? usernameText : "@" + usernameText;
           usernameModal.style.display = "none";
           miniSite.classList.remove("editing");
         }
@@ -863,8 +884,27 @@
         miniSite.classList.remove("editing");
       });
 
+      // Avoid form submission on Enter key
+      document.querySelectorAll("form input").forEach((input) => {
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            const inputName = input.id.split("-")[1];
+            const saveButton = document.getElementById(`save-${input.id.split("-")[1]}`);
+            if (saveButton) {
+              saveButton.click();
+            }
+          }
+        });
+      });
+
       // Publish functionality
-      publishBtn.addEventListener("click", async function () {
+      form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
         // Validate required fields
         if (!siteData.displayName || !siteData.username) {
           showNotification("Por favor, completa al menos tu nombre y usuario", "error");
@@ -873,6 +913,11 @@
 
         if (!siteData.description) {
           showNotification("Por favor, agrega una descripción", "error");
+          return;
+        }
+
+        if (!siteData.profileImage) {
+          showNotification("Por favor, sube una imagen de perfil", "error");
           return;
         }
 
@@ -885,7 +930,7 @@
           // Prepare data for API
           const publishData = {
             displayName: siteData.displayName,
-            username: siteData.username.replace("@", ""),
+            username: siteData.username,
             description: siteData.description,
             profileImage: siteData.profileImage,
             accentColor: siteData.accentColor,
@@ -898,6 +943,7 @@
 
           // Show success message
           showNotification("¡Tu sitio ha sido publicado exitosamente!", "success");
+          console.log(response);
         } catch (error) {
           // Show error message
           console.error("Error publishing site:", error);
@@ -926,8 +972,8 @@
           <a href="${link.url}" class="link-button" target="_blank" onclick="event.stopPropagation();">${link.label}</a>
         </div>
         <div class="link-actions">
-          <button class="edit" title="Editar enlace">✏️</button>
-          <button class="remove" title="Eliminar enlace">🗑️</button>
+          <button type="button" class="edit" title="Editar enlace">✏️</button>
+          <button type="button" class="remove" title="Eliminar enlace">🗑️</button>
         </div>
       `;
 
@@ -1007,7 +1053,7 @@
       // API publishing function
       async function publishToAPI(data) {
         // Replace PUBLISH_ENDPOINT with your actual API endpoint
-        const endpoint = PUBLISH_ENDPOINT;
+        const endpoint = `${PUBLISH_ENDPOINT}?endpoint=create`;
 
         if (endpoint === "YOUR_API_ENDPOINT_HERE") {
           // Simulate API call for demonstration
@@ -1022,8 +1068,9 @@
         // Actual API call when endpoint is provided
         const response = await fetch(endpoint, {
           method: "POST",
+          redirect: "follow",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "text/plain;charset=UTF-8",
           },
           body: JSON.stringify(data),
         });

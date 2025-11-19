@@ -65,6 +65,17 @@ export async function convertBlobsToBase64(blobs) {
   return await Promise.all(promises);
 }
 
+export async function convertBlobToDataURI(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      resolve(event.target.result);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
 /**
  *
  * @param {String} urls, a string containing google drive links separated by commas

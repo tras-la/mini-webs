@@ -543,6 +543,51 @@
       #notification-icon {
         font-size: 1.2rem;
       }
+
+      /* Dialog Styles */
+      dialog {
+        border: none;
+        border-radius: var(--radius);
+        padding: 2rem;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        max-width: 400px;
+        width: 90%;
+        background: var(--white);
+        color: var(--text);
+      }
+      
+      dialog::backdrop {
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(2px);
+      }
+      
+      .dialog-content {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+      }
+      
+      .dialog-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+      
+      .dialog-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-size: 1rem;
+        font-family: inherit;
+      }
+      
+      .dialog-input:focus {
+        border-color: var(--primary);
+        outline: none;
+      }
     </style>
   </head>
   <body>
@@ -634,6 +679,19 @@
       <span id="notification-message">Sitio publicado exitosamente</span>
     </div>
 
+    <!-- Email Dialog -->
+    <dialog id="email-dialog">
+      <div class="dialog-content">
+        <h3 style="margin: 0; color: var(--primary);">¡Casi listo!</h3>
+        <p style="margin: 0; color: var(--text-light);">Ingresá tu email para recibir el enlace de edición. Lo necesitarás para hacer cambios en el futuro.</p>
+        <input type="email" id="user-email" class="dialog-input" placeholder="tu@email.com" required />
+        <div class="dialog-buttons">
+          <button type="button" id="cancel-email-btn" class="add-link-btn" style="border: 1px solid var(--border);">Cancelar</button>
+          <button type="button" id="confirm-publish-btn" class="primary-btn">Publicar Sitio</button>
+        </div>
+      </div>
+    </dialog>
+
     <script type="module">
       import { compressImageBlob, convertBlobsToBase64, convertBlobToDataURI } from "./utils.js";
 
@@ -667,6 +725,12 @@
       const notificationIcon = document.getElementById("notification-icon");
       const notificationMessage = document.getElementById("notification-message");
 
+      // Email Dialog Elements
+      const emailDialog = document.getElementById("email-dialog");
+      const userEmailInput = document.getElementById("user-email");
+      const cancelEmailBtn = document.getElementById("cancel-email-btn");
+      const confirmPublishBtn = document.getElementById("confirm-publish-btn");
+
       // Data storage
       let siteData = (window.siteData = {
         displayName: "",
@@ -675,6 +739,7 @@
         profileImage: "",
         accentColor: "#3d3f20",
         bgColor: "#e6deca",
+        email: "",
         links: [],
       });
 
@@ -807,7 +872,7 @@
       });
 
       // Publish functionality
-      form.addEventListener("submit", async function (event) {
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         if (!form.checkValidity()) {
           form.reportValidity();
@@ -829,6 +894,33 @@
           return;
         }
 
+        // Show email dialog
+        userEmailInput.value = siteData.email || "";
+        userEmailInput.style.borderColor = "var(--border)";
+        emailDialog.showModal();
+      });
+
+      // Dialog Event Listeners
+      cancelEmailBtn.addEventListener("click", () => {
+        emailDialog.close();
+      });
+
+      confirmPublishBtn.addEventListener("click", async () => {
+        const email = userEmailInput.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (!email || !emailRegex.test(email)) {
+          userEmailInput.style.borderColor = "var(--danger)";
+          showNotification("Por favor, ingresa un email válido", "error");
+          return;
+        }
+        
+        siteData.email = email;
+        emailDialog.close();
+        await performPublish();
+      });
+
+      async function performPublish() {
         // Show loading state
         publishBtn.disabled = true;
         publishText.textContent = "Publicando...";
@@ -843,15 +935,20 @@
             profileImage: siteData.profileImage,
             accentColor: siteData.accentColor,
             bgColor: siteData.bgColor,
+            email: siteData.email,
             links: siteData.links,
           };
 
           // Send data to API
           const response = await publishToAPI(publishData);
+          console.info(response);
 
           // Show success message
-          showNotification("¡Tu sitio ha sido publicado exitosamente!", "success");
-          console.log(response);
+          showNotification("¡Tu sitio ha sido publicado exitosamente! Tenés el link para editar el sitio en tu email.", "success");
+          setTimeout(() => {
+            showNotification("Redirigiendo al sitio...", "success");
+            location.href = `https://trasla.com.ar/${siteData.username}`;
+          }, 2000);
         } catch (error) {
           // Show error message
           console.error("Error publishing site:", error);
@@ -859,10 +956,10 @@
         } finally {
           // Reset button state
           publishBtn.disabled = false;
-          publishText.textContent = "Publicar mi sitio";
+          publishText.textContent = "Crear Sitio";
           publishSpinner.style.display = "none";
         }
-      });
+      }
 
       // Helper functions
       function processUrl(url) {

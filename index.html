@@ -121,83 +121,289 @@
         background: #e0e0e0;
       }
 
-      .mini-site h2 {
-        margin-bottom: 0.5rem;
-        cursor: pointer;
-        padding: 0.5rem;
-        border-radius: 4px;
-        transition: background 0.2s;
-      }
-
-      .mini-site h2:hover {
-        background: rgba(0, 0, 0, 0.05);
-      }
-
-      .mini-site .username {
-        color: var(--text-light);
-        margin-bottom: 1rem;
-        cursor: pointer;
-        padding: 0.5rem;
-        border-radius: 4px;
-        transition: background 0.2s;
-      }
-
-      .mini-site .username:hover {
-        background: rgba(0, 0, 0, 0.05);
-      }
-
-      .mini-site .description {
-        margin-bottom: 2rem;
-        line-height: 1.6;
-        cursor: pointer;
-        padding: 0.5rem;
-        border-radius: 4px;
-        transition: background 0.2s;
-      }
-
-      .mini-site .description:hover {
-        background: rgba(0, 0, 0, 0.05);
-      }
-
-      .mini-site .links {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-        margin-bottom: 2rem;
-      }
-
-      .mini-site .link-button {
-        display: block;
-        padding: 0.75rem 1.5rem;
-        border: 2px solid var(--primary);
-        color: inherit;
-        text-decoration: none;
-        border-radius: 6px;
-        font-weight: 500;
-        transition: all 0.2s;
-        cursor: pointer;
-      }
-
-      .mini-site .link-button:hover {
-        background: rgba(0, 0, 0, 0.3);
-      }
-
-      .mini-site .add-link {
+      .inline-input {
         background: transparent;
-        border: 2px dashed var(--border);
-        color: var(--text-light);
+        border: 1px solid transparent;
+        border-radius: 4px;
+        padding: 0.5rem;
+        width: 100%;
+        font-family: inherit;
+        color: inherit;
+        transition: all 0.2s;
+      }
+
+      .inline-input:hover, .inline-input:focus {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      .inline-input:focus {
+        border-color: var(--primary);
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(129, 61, 156, 0.2);
+      }
+
+      #display-name {
+        font-size: 1.5em;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        text-align: center;
+      }
+
+      .url-claimer {
         display: flex;
         align-items: center;
         justify-content: center;
+        margin: 0 auto 2rem;
+        font-size: 1.1rem;
+        color: var(--text-light);
+        background: rgba(255, 255, 255, 0.5);
+        padding: 0.75rem 1.5rem;
+        border-radius: 50px;
+        width: fit-content;
+        border: 1px solid transparent;
+        transition: all 0.3s ease;
+        cursor: text;
+      }
+
+      .url-claimer:hover, .url-claimer:focus-within {
+        background: var(--white);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        border-color: var(--border);
+      }
+
+      .url-prefix {
+        color: var(--text-light);
+        font-weight: 400;
+        white-space: nowrap;
+        user-select: none;
+      }
+
+      #username {
+        background: transparent;
+        border: none;
+        font-size: inherit;
+        font-weight: 700;
+        color: var(--text);
+        padding: 0 0 0 2px;
+        margin: 0;
+        width: 10ch;
+        min-width: 50px;
+        outline: none;
+        font-family: inherit;
+      }
+      
+      #username::placeholder {
+        color: var(--text-light);
+        opacity: 0.5;
+        font-weight: 400;
+      }
+
+      #description {
+        text-align: center;
+        resize: none;
+        min-height: 80px;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+        font-family: inherit;
+      }
+
+      /* Link Styles */
+      .links {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        width: 100%;
+      }
+
+      .link-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.5);
+        border: 1px solid var(--primary);
+        border-radius: 30px; /* Pill shape */
+        padding: 0.5rem 0.75rem 0.5rem 0.5rem;
+        transition: transform 0.2s, box-shadow 0.2s;
+        position: relative;
+      }
+
+      .link-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      }
+
+      .link-thumbnail {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+        flex-shrink: 0;
+        background-color: rgba(0,0,0,0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        overflow: hidden;
+      }
+      
+      .link-thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .link-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-width: 0;
+        text-align: center; /* Centered text like Linktree */
+      }
+
+      .link-label {
+        font-weight: 600;
+        color: var(--text);
+        text-decoration: none;
+        display: block;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      
+      .link-url-preview {
+        font-size: 0.75rem;
+        color: var(--text-light);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .link-actions {
+        display: flex;
+        gap: 0.25rem;
+        opacity: 0.6;
+        transition: opacity 0.2s;
+      }
+      
+      .link-item:hover .link-actions {
+        opacity: 1;
+      }
+
+      /* Edit Mode Styles */
+      .link-edit-container {
+        background: rgba(0,0,0,0.03);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1rem;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      }
+
+      .link-edit-row {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+      }
+      
+      .link-edit-inputs {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
         gap: 0.5rem;
       }
 
-      .mini-site .add-link:hover {
-        background: rgba(0, 0, 0, 0.05);
+      .link-input {
+        width: 100%;
+        padding: 0.6rem;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-size: 0.9rem;
+        background-color: var(--bg);
+      }
+      
+      .link-input:focus {
         border-color: var(--primary);
+        outline: none;
+      }
+      
+      .upload-btn-wrapper {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        cursor: pointer;
+      }
+      
+      .thumbnail-upload-preview {
+        width: 60px;
+        height: 60px;
+        border-radius: 8px;
+        border: 2px dashed var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        overflow: hidden;
+        background-color: var(--bg);
+        transition: all 0.2s;
+      }
+      
+      .thumbnail-upload-preview:hover {
+        border-color: var(--primary);
+        background: #f0f0f0;
+      }
+      
+      .thumbnail-upload-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .icon-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1.1rem;
+        padding: 0.4rem;
+        border-radius: 50%;
+        transition: background 0.2s;
+        color: var(--text-light);
+      }
+
+      .icon-btn:hover {
+        background-color: rgba(0,0,0,0.05);
         color: var(--primary);
       }
 
+      .add-link-container {
+        margin-top: 1rem;
+      }
+      
+      .add-link-btn {
+        width: 100%;
+        padding: 1rem;
+        background: transparent;
+        border: 2px dashed var(--border);
+        border-radius: 30px;
+        color: var(--text-light);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      
+      .add-link-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+        background: rgba(0,0,0,0.02);
+      }
+
+      /* Main Actions */
       .actions {
         display: flex;
         gap: 1rem;
@@ -206,307 +412,136 @@
         flex-wrap: wrap;
       }
 
-      button {
+      .primary-btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: 0.5rem;
-        background: var(--primary);
-        color: var(--white);
+        background-color: var(--primary) !important; /* Force color */
+        color: var(--white) !important;
         border: none;
         padding: 0.75rem 1.5rem;
-        border-radius: 6px;
+        border-radius: 30px; /* Pill shape */
         font-size: 1rem;
-        font-weight: 500;
+        font-weight: 600;
         cursor: pointer;
         transition: background-color 0.2s, transform 0.1s;
+        min-width: 150px;
       }
 
-      button:hover {
-        background: var(--primary-light);
+      .primary-btn:hover {
+        background-color: var(--primary-light) !important;
+        opacity: 0.9;
       }
 
-      button:active {
+      .primary-btn:active {
         transform: translateY(1px);
       }
 
-      button.secondary {
-        background: var(--secondary);
-      }
-
-      button.secondary:hover {
-        background: #005fa3;
-      }
-
-      button:disabled {
-        background: var(--text-light);
+      .primary-btn:disabled {
+        background-color: var(--text-light) !important;
         cursor: not-allowed;
+        opacity: 0.7;
       }
 
-      .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 100;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .modal-content {
-        background: var(--white);
-        border-radius: var(--radius);
-        padding: 2rem;
-        box-shadow: var(--shadow);
-        width: 90%;
-        max-width: 500px;
-      }
-
-      .modal h3 {
-        margin-top: 0;
-        color: var(--primary);
-      }
-
-      .form-group {
-        margin-bottom: 1.5rem;
-      }
-
-      .form-group label {
-        display: block;
-        margin-bottom: 0.5rem;
-        font-weight: 500;
-      }
-
-      .form-group input,
-      .form-group textarea {
-        width: 100%;
-        padding: 0.75rem;
-        font-size: 1rem;
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        transition: border-color 0.2s;
-      }
-
-      .form-group input:focus,
-      .form-group textarea:focus {
-        outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 0 2px rgba(129, 61, 156, 0.2);
-      }
-
-      .form-group textarea {
-        resize: vertical;
-        min-height: 100px;
-      }
-
-      .modal-actions {
-        display: flex;
-        gap: 1rem;
-        justify-content: flex-end;
-      }
-
-      .file-input-container {
-        position: relative;
-      }
-
-      .file-input {
-        opacity: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        cursor: pointer;
-      }
-
-      .file-input-label {
-        display: block;
-        padding: 0.75rem;
-        background: #f5f5f5;
-        border: 1px dashed var(--border);
-        border-radius: 6px;
-        text-align: center;
-        cursor: pointer;
-        transition: background-color 0.2s;
-      }
-
-      .file-input-label:hover {
-        background: #eeeeee;
-      }
-
-      .link-item {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        margin-bottom: 0.75rem;
-        padding: 0.5rem;
-        border-radius: 6px;
-        transition: background 0.2s;
-      }
-
-      .link-item:hover {
-        background: rgba(0, 0, 0, 0.05);
-      }
-
-      .link-item .link-text {
-        flex: 1;
-        text-align: left;
-      }
-
-      .link-item .link-actions {
-        display: flex;
-        gap: 0.25rem;
-      }
-
-      .link-item button {
-        padding: 0.25rem 0.5rem;
-        background: transparent;
-        color: var(--text-light);
-      }
-
-      .link-item button:hover {
-        background: rgba(0, 0, 0, 0.1);
-      }
-
-      .link-item button.remove {
-        color: var(--danger);
-      }
-
-      .notification {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 1rem 1.5rem;
-        border-radius: var(--radius);
-        background: var(--white);
-        box-shadow: var(--shadow);
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        z-index: 1000;
-        transform: translateX(150%);
-        transition: transform 0.3s ease;
-      }
-
-      .notification.show {
-        transform: translateX(0);
-      }
-
-      .notification.success {
-        border-left: 4px solid var(--primary);
-      }
-
-      .notification.error {
-        border-left: 4px solid var(--danger);
-      }
-
-      .spinner {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        border: 3px solid rgba(255, 255, 255, 0.3);
-        border-radius: 50%;
-        border-top-color: var(--white);
-        animation: spin 1s ease-in-out infinite;
-      }
-
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
+      /* Color Picker Styles */
       .color-picker-container {
-        display: flex;
-        gap: 1rem;
-        margin-top: 1.5rem;
-        justify-content: center;
-        flex-wrap: wrap;
+        margin-top: 2rem;
+        padding: 1rem;
+        background: rgba(0,0,0,0.03);
+        border-radius: 12px;
       }
 
-      .color-picker {
+      .color-picker-group {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+      }
+
+      .color-picker-item {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 0.5rem;
       }
 
-      .color-picker label {
-        font-size: 0.875rem;
+      .color-picker-item label {
+        font-size: 0.9rem;
+        color: var(--text-light);
         font-weight: 500;
-        color: var(--text);
       }
 
-      .color-picker input[type="color"] {
-        width: 60px;
-        height: 60px;
-        border: none;
-        border-radius: 50%;
+      .color-input-wrapper {
+        position: relative;
+        width: 40px;
+        height: 40px;
         cursor: pointer;
-        padding: 0;
-        background: transparent;
       }
 
-      .color-picker input[type="color"]::-webkit-color-swatch {
-        border: none;
+      .color-input-wrapper input[type="color"] {
+        position: absolute;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        z-index: 2;
+        inset: 0;
+      }
+
+      .color-circle {
+        width: 100%;
+        height: 100%;
         border-radius: 50%;
-        padding: 0;
+        border: 2px solid var(--white);
+        box-shadow: 0 0 0 1px var(--border);
+        transition: transform 0.2s;
       }
 
-      .color-picker input[type="color"]::-webkit-color-swatch-wrapper {
-        border: none;
-        border-radius: 50%;
-        padding: 0;
+      .color-input-wrapper:hover .color-circle {
+        transform: scale(1.1);
       }
 
-      .color-preview {
+      /* Hide file input visually but keep it functional */
+      #profile-image-input {
+        display: none;
+      }
+      /* Notification Styles */
+      .notification {
+        position: fixed;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%) translateY(100px);
+        background: var(--white);
+        padding: 1rem 1.5rem;
+        border-radius: 50px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        margin-top: 0.5rem;
-      }
-
-      .color-sample {
-        width: 20px;
-        height: 20px;
-        border-radius: 4px;
+        gap: 0.75rem;
+        z-index: 1000;
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        font-weight: 500;
         border: 1px solid var(--border);
+        min-width: 300px;
+        justify-content: center;
       }
 
-      .color-value {
-        font-size: 0.75rem;
-        color: var(--text-light);
+      .notification.show {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
       }
 
-      @media (max-width: 600px) {
-        body {
-          padding: 1rem;
-        }
+      .notification.success {
+        border-left: 4px solid #4caf50;
+      }
 
-        .mini-site {
-          padding: 1.5rem;
-        }
-
-        .actions {
-          flex-direction: column;
-        }
-
-        button {
-          width: 100%;
-        }
-
-        .notification {
-          right: 10px;
-          left: 10px;
-          transform: translateY(-150%);
-        }
-
-        .notification.show {
-          transform: translateY(0);
-        }
+      .notification.error {
+        border-left: 4px solid var(--danger);
+      }
+      
+      #notification-icon {
+        font-size: 1.2rem;
       }
     </style>
   </head>
@@ -515,134 +550,82 @@
       <header>
         <h1>Creá tu mini sitio web en Trasla</h1>
         <p class="subtitle">Tu lugar en la web para mostrar lo que hacés.</p>
-        <em>Hacé click en el elemento para editarlo.</em>
+        <em>Editá la información directamente en la tarjeta.</em>
       </header>
 
-      <form disabled>
+      <form id="main-form">
+        <div class="url-claimer" onclick="document.getElementById('username').focus()">
+          <span class="url-prefix">trasla.com.ar/</span>
+          <input type="text" id="username" placeholder="tunombre" name="username" required autocomplete="off" />
+        </div>
+
         <div class="mini-site" id="mini-site">
           <div class="profile-image-container">
             <div class="profile-placeholder" id="profile-placeholder">👤</div>
             <img src="" alt="Tu imagen de perfil" id="profile-image" style="display: none" />
+            <input type="file" id="profile-image-input" accept="image/*" name="profile-image" />
           </div>
 
-          <h2 id="display-name">Tu Nombre</h2>
-          <div class="username" id="username">@tunombre</div>
-          <div class="description" id="description">Haz clic aquí para agregar una descripción sobre ti.</div>
+          <input type="text" id="display-name" class="inline-input" placeholder="Nombre del sitio" name="displayName" required />
+          
 
-          <div class="links" id="links-container">
-            <!-- Links will be added here dynamically -->
-            <div class="link-button add-link" id="add-first-link">
-              <span>+ Agregar enlace</span>
+
+          <textarea id="description" class="inline-input" placeholder="Agregá una descripción sobre tu sitio" name="description"></textarea>
+
+          <div class="links" id="links-container"></div>
+          
+          <!-- Add Link Section -->
+          <div class="add-link-container" id="add-link-container">
+            <button type="button" id="show-add-link-btn" class="add-link-btn">+ Agregar enlace</button>
+            
+            <div id="add-link-form" class="link-edit-container" style="display: none;">
+              <div class="link-edit-row">
+                <div class="upload-btn-wrapper">
+                  <div class="thumbnail-upload-preview" id="new-link-preview" title="Agregar imagen">
+                    <span style="font-size: 1.5rem;">📷</span>
+                  </div>
+                  <input type="file" id="new-link-image" accept="image/*" style="display: none;" />
+                </div>
+                <div class="link-edit-inputs">
+                  <input type="text" id="new-link-name" class="link-input" placeholder="Título del enlace" />
+                  <input type="url" id="new-link-url" class="link-input" placeholder="URL (https://...)" />
+                </div>
+              </div>
+              <div class="modal-actions" style="margin-top: 0; padding-top: 0;">
+                <button type="button" id="cancel-add-btn" class="icon-btn cancel" title="Cancelar">❌</button>
+                <button type="button" id="save-new-btn" class="icon-btn save" title="Guardar">💾</button>
+              </div>
             </div>
           </div>
           <div class="color-picker-container">
-            <div class="color-picker">
-              <label for="accent-color">Color de acento</label>
-              <input type="color" id="accent-color" value="#3d3f20" name="accent-color" />
-              <div class="color-preview">
-                <div class="color-sample" id="accent-sample" style="background-color: #3d3f20"></div>
-                <span class="color-value" id="accent-value">#3d3f20</span>
+            <div class="color-picker-group">
+              <div class="color-picker-item">
+                <label for="accent-color">Acento</label>
+                <div class="color-input-wrapper">
+                  <input type="color" id="accent-color" value="#3d3f20" name="accent-color" />
+                  <div class="color-circle" id="accent-sample" style="background-color: #3d3f20"></div>
+                </div>
               </div>
-            </div>
 
-            <div class="color-picker">
-              <label for="bg-color">Color de fondo</label>
-              <input type="color" id="bg-color" value="#e6deca" name="bg-color" />
-              <div class="color-preview">
-                <div class="color-sample" id="bg-sample" style="background-color: #e6deca"></div>
-                <span class="color-value" id="bg-value">#e6deca</span>
+              <div class="color-picker-item">
+                <label for="bg-color">Fondo</label>
+                <div class="color-input-wrapper">
+                  <input type="color" id="bg-color" value="#e6deca" name="bg-color" />
+                  <div class="color-circle" id="bg-sample" style="background-color: #e6deca"></div>
+                </div>
               </div>
             </div>
           </div>
 
           <div class="actions">
-            <button type="submit" id="publish-btn">
+            <button type="submit" id="publish-btn" class="primary-btn">
               <span id="publish-text">Crear Sitio</span>
               <span id="publish-spinner" class="spinner" style="display: none"></span>
             </button>
           </div>
         </div>
 
-        <!-- Modals for editing -->
-        <div class="modal" id="image-modal">
-          <div class="modal-content">
-            <h3>Cambiar imagen de perfil</h3>
-            <div class="form-group">
-              <div class="file-input-container">
-                <div class="file-input-label" id="file-input-label">Hacé click acá para subir una imagen</div>
-                <input type="file" class="file-input" id="profile-image-file" accept="image/*" name="profile-image" />
-              </div>
-            </div>
-            <div class="modal-actions">
-              <button type="button" class="secondary" id="cancel-image">Cancelar</button>
-            </div>
-          </div>
-        </div>
 
-        <div class="modal" id="name-modal">
-          <div class="modal-content">
-            <h3>Editar Nombre</h3>
-            <div class="form-group">
-              <label for="edit-name">Nombre público</label>
-              <input type="text" id="edit-name" placeholder="Trasla Eventos" name="name" />
-            </div>
-            <div class="modal-actions">
-              <button type="button" class="secondary" id="cancel-name">Cancelar</button>
-              <button type="button" id="save-name">Guardar</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="modal" id="username-modal">
-          <div class="modal-content">
-            <h3>URL (@usuario) del sitio</h3>
-            <div class="form-group">
-              <label for="edit-username" id="editUsernameLabel">trasla.com.ar/traslaeventos</label>
-              <input type="text" id="edit-username" name="username" placeholder="traslaeventos" />
-            </div>
-            <div class="modal-actions">
-              <button type="button" class="secondary" id="cancel-username">Cancelar</button>
-              <button type="button" id="save-username">Guardar</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="modal" id="description-modal">
-          <div class="modal-content">
-            <h3>Editar Descripción</h3>
-            <div class="form-group">
-              <label for="edit-description">¿De qué se trata el sitio?</label>
-              <textarea id="edit-description" placeholder="" name="description"></textarea>
-            </div>
-            <div class="modal-actions">
-              <button type="button" class="secondary" id="cancel-description">Cancelar</button>
-              <button type="button" id="save-description">Guardar</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="modal" id="link-modal">
-          <div class="modal-content">
-            <h3 id="link-modal-title">Agregar enlace</h3>
-            <div class="form-group">
-              <label for="edit-link-label">Texto del enlace</label>
-              <input
-                type="text"
-                id="edit-link-label"
-                placeholder="Ej: Instagram, Mi portfolio, etc."
-                name="link-label"
-              />
-            </div>
-            <div class="form-group">
-              <label for="edit-link-url">URL</label>
-              <input type="text" id="edit-link-url" placeholder="https://..." name="link-url" />
-            </div>
-            <div class="modal-actions">
-              <button type="button" class="secondary" id="cancel-link">Cancelar</button>
-              <button type="button" id="save-link">Guardar</button>
-            </div>
-          </div>
-        </div>
       </form>
     </div>
     <!-- Notification -->
@@ -662,38 +645,22 @@
       const username = document.getElementById("username");
       const description = document.getElementById("description");
       const linksContainer = document.getElementById("links-container");
-      const addFirstLink = document.getElementById("add-first-link");
-      const form = document.querySelector("form");
+      const form = document.getElementById("main-form");
 
       // Color pickers
       const accentColorPicker = document.getElementById("accent-color");
       const bgColorPicker = document.getElementById("bg-color");
       const accentSample = document.getElementById("accent-sample");
       const bgSample = document.getElementById("bg-sample");
-      const accentValue = document.getElementById("accent-value");
-      const bgValue = document.getElementById("bg-value");
 
-      // Modals
-      const imageModal = document.getElementById("image-modal");
-      const nameModal = document.getElementById("name-modal");
-      const usernameModal = document.getElementById("username-modal");
-      const descriptionModal = document.getElementById("description-modal");
-      const linkModal = document.getElementById("link-modal");
-
-      // Modal inputs
-      const editName = document.getElementById("edit-name");
-      const editUsername = document.getElementById("edit-username");
-      const editDescription = document.getElementById("edit-description");
-      const editLinkLabel = document.getElementById("edit-link-label");
-      const editLinkUrl = document.getElementById("edit-link-url");
-      const linkModalTitle = document.getElementById("link-modal-title");
+      // Add Link Container
+      const addLinkContainer = document.getElementById("add-link-container");
 
       // Buttons
       const publishBtn = document.getElementById("publish-btn");
       const publishText = document.getElementById("publish-text");
       const publishSpinner = document.getElementById("publish-spinner");
-      const profileImageFile = document.getElementById("profile-image-file");
-      const fileInputLabel = document.getElementById("file-input-label");
+      const profileImageInput = document.getElementById("profile-image-input");
 
       // Notification
       const notification = document.getElementById("notification");
@@ -726,162 +693,108 @@
         siteData.profileImage = ""; // base64 minimal example
       }
 
-      let editingLinkIndex = -1; // -1 means adding a new link
+      // Initialize input values from siteData
+      function initializeInputs() {
+        displayName.value = siteData.displayName;
+        username.value = siteData.username;
+        description.value = siteData.description;
+        accentColorPicker.value = siteData.accentColor;
+        bgColorPicker.value = siteData.bgColor;
+        
+        // Trigger input events to update UI
+        accentColorPicker.dispatchEvent(new Event('input'));
+        bgColorPicker.dispatchEvent(new Event('input'));
+        
+        if (siteData.profileImage) {
+          profileImage.src = siteData.profileImage;
+          profileImage.style.display = "block";
+          profilePlaceholder.style.display = "none";
+        }
+        
+        adjustUsernameWidth(username);
+      }
+
+      let editingLinkIndex = -1;
+      // let isAddingLink = false; // Removed as we use static form visibility now
 
       // API endpoint placeholder
       const PUBLISH_ENDPOINT =
         "https://script.google.com/macros/s/AKfycbwWCl32hVI3E5KDv5i5TM4Hhmzz9YuiI1DF-j5NKVN8dDs9EqGYMUkoJAROYx-PRJkYvg/exec";
 
-      // Event listeners for editable elements
+      // Event listeners for inline inputs
+      displayName.addEventListener("input", (e) => {
+        siteData.displayName = e.target.value;
+      });
+
+      username.addEventListener("input", (e) => {
+        // Simple validation: allow only alphanumeric, underscore, and dash
+        const validValue = e.target.value.replace(/[^a-zA-Z0-9_-]/g, "");
+        if (validValue !== e.target.value) {
+          e.target.value = validValue;
+        }
+        siteData.username = validValue;
+        adjustUsernameWidth(e.target);
+      });
+
+      function adjustUsernameWidth(input) {
+        const length = input.value.length || input.placeholder.length;
+        input.style.width = Math.max(length, 4) + "ch";
+      }
+      
+      // Initialize width
+      adjustUsernameWidth(username);
+
+      // Auto-grow textarea
+      function adjustTextareaHeight(textarea) {
+        textarea.style.height = "auto";
+        textarea.style.height = textarea.scrollHeight + 3 + "px";
+      }
+
+      description.addEventListener("input", (e) => {
+        siteData.description = e.target.value;
+        adjustTextareaHeight(e.target);
+      });
+
+      // Initialize textarea height
+      adjustTextareaHeight(description);
+
+      // Image upload handling
       profilePlaceholder.addEventListener("click", () => {
-        imageModal.style.display = "flex";
-        miniSite.classList.add("editing");
+        profileImageInput.click();
       });
 
       profileImage.addEventListener("click", () => {
-        imageModal.style.display = "flex";
-        miniSite.classList.add("editing");
+        profileImageInput.click();
       });
 
-      displayName.addEventListener("click", () => {
-        editName.value = siteData.displayName;
-        nameModal.style.display = "flex";
-        miniSite.classList.add("editing");
-      });
-
-      username.addEventListener("click", () => {
-        usernameModal.style.display = "flex";
-        miniSite.classList.add("editing");
-      });
-
-      editUsername.addEventListener("keyup", (e) => {
-        e.target.value = e.target.value.replace(/[^a-zA-Z0-9_-]/g, ""); // Remove invalid characters
-        editUsernameLabel.textContent = `trasla.com.ar/${event.target.value}`;
-      });
-
-      description.addEventListener("click", () => {
-        editDescription.value = siteData.description;
-        descriptionModal.style.display = "flex";
-        miniSite.classList.add("editing");
-      });
-
-      addFirstLink.addEventListener("click", () => {
-        editLinkLabel.value = "";
-        editLinkUrl.value = "";
-        editingLinkIndex = -1;
-        linkModalTitle.textContent = "Agregar enlace";
-        linkModal.style.display = "flex";
-        miniSite.classList.add("editing");
-      });
-
-      // Color picker event listeners
-      accentColorPicker.addEventListener("input", (e) => {
-        const color = e.target.value;
-        siteData.accentColor = color;
-        accentSample.style.backgroundColor = color;
-        accentValue.textContent = color;
-        updateColors();
-      });
-
-      bgColorPicker.addEventListener("input", (e) => {
-        const color = e.target.value;
-        siteData.bgColor = color;
-        bgSample.style.backgroundColor = color;
-        bgValue.textContent = color;
-        updateColors();
-      });
-
-      // File upload handling
-      profileImageFile.addEventListener("change", function () {
+      profileImageInput.addEventListener("change", function () {
         if (this.files && this.files[0]) {
           const file = this.files[0];
           const reader = new FileReader();
           reader.onload = async function (e) {
             const compressedBlob = await compressImageBlob(file);
-            siteData.profileImage = await convertBlobToDataURI(compressedBlob);
-            profileImage.src = URL.createObjectURL(compressedBlob);
+            const base64 = await convertBlobToDataURI(compressedBlob);
+            profileImage.src = base64;
             profileImage.style.display = "block";
             profilePlaceholder.style.display = "none";
-            fileInputLabel.textContent = "Imagen actualizada";
-            setTimeout(() => {
-              imageModal.style.display = "none";
-              miniSite.classList.remove("editing");
-            }, 1000);
+            siteData.profileImage = base64;
+            
+            // Reset input so same file can be selected again if needed
+            profileImageInput.value = "";
           };
-          reader.readAsDataURL(this.files[0]);
+          reader.readAsDataURL(file);
         }
       });
 
-      // Modal save actions
-      document.getElementById("save-name").addEventListener("click", () => {
-        if (editName.value.trim()) {
-          siteData.displayName = editName.value.trim();
-          displayName.textContent = siteData.displayName;
-          nameModal.style.display = "none";
-          miniSite.classList.remove("editing");
-        }
+      // Color picker event listeners
+      accentColorPicker.addEventListener("input", (e) => {
+        siteData.accentColor = e.target.value;
+        updateColors();
       });
 
-      document.getElementById("save-username").addEventListener("click", () => {
-        const usernameText = editUsername.value.trim();
-        if (usernameText) {
-          siteData.username = usernameText;
-          username.textContent = usernameText.startsWith("@") ? usernameText : "@" + usernameText;
-          usernameModal.style.display = "none";
-          miniSite.classList.remove("editing");
-        }
-      });
-
-      document.getElementById("save-description").addEventListener("click", () => {
-        siteData.description = editDescription.value.trim() || siteData.description;
-        description.textContent = siteData.description;
-        descriptionModal.style.display = "none";
-        miniSite.classList.remove("editing");
-      });
-
-      document.getElementById("save-link").addEventListener("click", () => {
-        const label = editLinkLabel.value.trim();
-        const url = editLinkUrl.value.trim();
-
-        if (label && url) {
-          if (editingLinkIndex === -1) {
-            // Add new link
-            siteData.links.push({ label, url });
-          } else {
-            // Update existing link
-            siteData.links[editingLinkIndex] = { label, url };
-          }
-
-          renderLinks();
-          linkModal.style.display = "none";
-          miniSite.classList.remove("editing");
-        }
-      });
-
-      // Modal cancel actions
-      document.getElementById("cancel-image").addEventListener("click", () => {
-        imageModal.style.display = "none";
-        miniSite.classList.remove("editing");
-      });
-
-      document.getElementById("cancel-name").addEventListener("click", () => {
-        nameModal.style.display = "none";
-        miniSite.classList.remove("editing");
-      });
-
-      document.getElementById("cancel-username").addEventListener("click", () => {
-        usernameModal.style.display = "none";
-        miniSite.classList.remove("editing");
-      });
-
-      document.getElementById("cancel-description").addEventListener("click", () => {
-        descriptionModal.style.display = "none";
-        miniSite.classList.remove("editing");
-      });
-
-      document.getElementById("cancel-link").addEventListener("click", () => {
-        linkModal.style.display = "none";
-        miniSite.classList.remove("editing");
+      bgColorPicker.addEventListener("input", (e) => {
+        siteData.bgColor = e.target.value;
+        updateColors();
       });
 
       // Avoid form submission on Enter key
@@ -889,11 +802,6 @@
         input.addEventListener("keydown", (e) => {
           if (e.key === "Enter") {
             e.preventDefault();
-            const inputName = input.id.split("-")[1];
-            const saveButton = document.getElementById(`save-${input.id.split("-")[1]}`);
-            if (saveButton) {
-              saveButton.click();
-            }
           }
         });
       });
@@ -911,13 +819,13 @@
           return;
         }
 
-        if (!siteData.description) {
-          showNotification("Por favor, agrega una descripción", "error");
+        if (!siteData.profileImage) {
+          showNotification("Por favor, agrega una imagen de perfil", "error");
           return;
         }
 
-        if (!siteData.profileImage) {
-          showNotification("Por favor, sube una imagen de perfil", "error");
+        if (siteData.links.length === 0) {
+          showNotification("Por favor, agrega al menos un enlace", "error");
           return;
         }
 
@@ -957,60 +865,222 @@
       });
 
       // Helper functions
-      function renderLinks() {
-        // Clear existing links (except the add button)
-        while (linksContainer.firstChild) {
-          linksContainer.removeChild(linksContainer.firstChild);
+      function processUrl(url) {
+        url = url.trim();
+        if (!url) return null;
+        // If it doesn't start with http:// or https://, prepend https://
+        if (!/^https?:\/\//i.test(url)) {
+          url = 'https://' + url;
         }
+        try {
+          new URL(url);
+          return url;
+        } catch (e) {
+          return null;
+        }
+      }
 
-        // Render all links
+      function renderLinks() {
+        linksContainer.innerHTML = "";
+
         siteData.links.forEach((link, index) => {
           const linkItem = document.createElement("div");
-          linkItem.className = "link-item";
-          linkItem.innerHTML = `
-        <div class="link-text">
-          <a href="${link.url}" class="link-button" target="_blank" onclick="event.stopPropagation();">${link.label}</a>
-        </div>
-        <div class="link-actions">
-          <button type="button" class="edit" title="Editar enlace">✏️</button>
-          <button type="button" class="remove" title="Eliminar enlace">🗑️</button>
-        </div>
-      `;
+          
+          if (editingLinkIndex === index) {
+            linkItem.className = "link-edit-container";
+            linkItem.innerHTML = `
+              <div class="link-edit-row">
+                <div class="upload-btn-wrapper">
+                  <div class="thumbnail-upload-preview" title="Cambiar imagen">
+                    ${link.image ? `<img src="${link.image}" />` : '<span style="font-size: 1.5rem;">📷</span>'}
+                  </div>
+                  <input type="file" class="link-image-input" accept="image/*" style="display: none;" />
+                </div>
+                <div class="link-edit-inputs">
+                  <input type="text" class="link-input edit-name" value="${link.label}" placeholder="Título del enlace" />
+                  <input type="url" class="link-input edit-url" value="${link.url}" placeholder="URL (https://...)" />
+                </div>
+              </div>
+              <div class="modal-actions" style="margin-top: 0; padding-top: 0;">
+                <button type="button" class="icon-btn cancel" title="Cancelar">❌</button>
+                <button type="button" class="icon-btn save" title="Guardar">💾</button>
+              </div>
+            `;
 
-          // Add event listeners for edit and remove
-          linkItem.querySelector(".edit").addEventListener("click", (e) => {
-            e.stopPropagation();
-            editLinkLabel.value = link.label;
-            editLinkUrl.value = link.url;
-            editingLinkIndex = index;
-            linkModalTitle.textContent = "Editar enlace";
-            linkModal.style.display = "flex";
-            miniSite.classList.add("editing");
-          });
+            const saveBtn = linkItem.querySelector(".save");
+            const cancelBtn = linkItem.querySelector(".cancel");
+            const nameInput = linkItem.querySelector(".edit-name");
+            const urlInput = linkItem.querySelector(".edit-url");
+            const imageInput = linkItem.querySelector(".link-image-input");
+            const imagePreview = linkItem.querySelector(".thumbnail-upload-preview");
+            
+            let currentImage = link.image;
 
-          linkItem.querySelector(".remove").addEventListener("click", (e) => {
-            e.stopPropagation();
-            siteData.links.splice(index, 1);
-            renderLinks();
-          });
+            // Image upload handler
+            imagePreview.addEventListener("click", () => imageInput.click());
+            imageInput.addEventListener("change", async (e) => {
+              if (e.target.files && e.target.files[0]) {
+                const file = e.target.files[0];
+                const compressed = await compressImageBlob(file, 128);
+                const base64 = await convertBlobToDataURI(compressed);
+                currentImage = base64;
+                imagePreview.innerHTML = `<img src="${base64}" />`;
+              }
+            });
+
+            saveBtn.addEventListener("click", () => {
+              const newName = nameInput.value.trim();
+              const rawUrl = urlInput.value.trim();
+              const validUrl = processUrl(rawUrl);
+              
+              if (newName && validUrl) {
+                siteData.links[index] = { ...link, label: newName, url: validUrl, image: currentImage };
+                editingLinkIndex = -1;
+                renderLinks();
+              } else {
+                if (!newName) nameInput.style.borderColor = "var(--danger)";
+                if (!validUrl) {
+                  urlInput.style.borderColor = "var(--danger)";
+                  showNotification("URL inválida", "error");
+                }
+              }
+            });
+
+            cancelBtn.addEventListener("click", () => {
+              editingLinkIndex = -1;
+              renderLinks();
+            });
+
+            // Prevent form submission on Enter in edit fields
+            [nameInput, urlInput].forEach(input => {
+              input.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  saveBtn.click(); // Trigger save on Enter
+                }
+              });
+            });
+
+          } else {
+            linkItem.className = "link-item";
+            linkItem.innerHTML = `
+              <div class="link-thumbnail">
+                ${link.image ? `<img src="${link.image}" alt="${link.label}" />` : '🔗'}
+              </div>
+              <div class="link-content">
+                <a href="${link.url}" class="link-label" target="_blank" onclick="event.stopPropagation(); return false;">${link.label}</a>
+                <span class="link-url-preview">${new URL(link.url).hostname}</span>
+              </div>
+              <div class="link-actions">
+                <button type="button" class="icon-btn edit" title="Editar">✏️</button>
+                <button type="button" class="icon-btn remove" title="Eliminar">🗑️</button>
+              </div>
+            `;
+
+            linkItem.querySelector(".edit").addEventListener("click", () => {
+              editingLinkIndex = index;
+              resetAddLinkForm(); // Close add form if open
+              renderLinks();
+            });
+
+            linkItem.querySelector(".remove").addEventListener("click", () => {
+              if(confirm("¿Estás seguro de eliminar este enlace?")) {
+                siteData.links.splice(index, 1);
+                renderLinks();
+              }
+            });
+          }
 
           linksContainer.appendChild(linkItem);
         });
 
-        // Add the "Add link" button at the end
-        const addLinkBtn = document.createElement("div");
-        addLinkBtn.className = "link-button add-link";
-        addLinkBtn.innerHTML = "<span>+ Agregar enlace</span>";
-        addLinkBtn.addEventListener("click", () => {
-          editLinkLabel.value = "";
-          editLinkUrl.value = "";
-          editingLinkIndex = -1;
-          linkModalTitle.textContent = "Agregar enlace";
-          linkModal.style.display = "flex";
-          miniSite.classList.add("editing");
-        });
+        // renderAddLinkSection(); // No longer needed
+      }
 
-        linksContainer.appendChild(addLinkBtn);
+      // Add Link Form Elements
+      const showAddLinkBtn = document.getElementById("show-add-link-btn");
+      const addLinkForm = document.getElementById("add-link-form");
+      const saveNewBtn = document.getElementById("save-new-btn");
+      const cancelAddBtn = document.getElementById("cancel-add-btn");
+      const newLinkName = document.getElementById("new-link-name");
+      const newLinkUrl = document.getElementById("new-link-url");
+      const newLinkImage = document.getElementById("new-link-image");
+      const newLinkPreview = document.getElementById("new-link-preview");
+      
+      let newLinkImageData = null;
+
+      // Add Link Event Listeners
+      showAddLinkBtn.addEventListener("click", () => {
+        showAddLinkBtn.style.display = "none";
+        addLinkForm.style.display = "flex";
+        editingLinkIndex = -1; // Close other edits
+        renderLinks();
+        setTimeout(() => newLinkName.focus(), 50);
+      });
+
+      cancelAddBtn.addEventListener("click", () => {
+        resetAddLinkForm();
+      });
+
+      function resetAddLinkForm() {
+        showAddLinkBtn.style.display = "block";
+        addLinkForm.style.display = "none";
+        newLinkName.value = "";
+        newLinkUrl.value = "";
+        newLinkImage.value = "";
+        newLinkImageData = null;
+        newLinkPreview.innerHTML = '<span style="font-size: 1.5rem;">📷</span>';
+        newLinkName.style.borderColor = "var(--border)";
+        newLinkUrl.style.borderColor = "var(--border)";
+      }
+
+      // Image upload for new link
+      newLinkPreview.addEventListener("click", () => newLinkImage.click());
+      newLinkImage.addEventListener("change", async (e) => {
+        if (e.target.files && e.target.files[0]) {
+          const file = e.target.files[0];
+          const compressed = await compressImageBlob(file, 128);
+          const base64 = await convertBlobToDataURI(compressed);
+          newLinkImageData = base64;
+          newLinkPreview.innerHTML = `<img src="${base64}" />`;
+        }
+      });
+
+      // Save new link
+      function saveNewLink() {
+        const name = newLinkName.value.trim();
+        const rawUrl = newLinkUrl.value.trim();
+        const validUrl = processUrl(rawUrl);
+
+        if (name && validUrl) {
+          siteData.links.push({ label: name, url: validUrl, image: newLinkImageData });
+          renderLinks();
+          resetAddLinkForm();
+        } else {
+           if (!name) newLinkName.style.borderColor = "var(--danger)";
+           if (!validUrl) {
+             newLinkUrl.style.borderColor = "var(--danger)";
+             showNotification("URL inválida", "error");
+           }
+        }
+      }
+
+      saveNewBtn.addEventListener("click", saveNewLink);
+
+      // Enter key support for new link form
+      [newLinkName, newLinkUrl].forEach(input => {
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            saveNewLink();
+          }
+          e.target.style.borderColor = "var(--border)";
+        });
+      });
+
+      function renderAddLinkSection() {
+        // This function is now deprecated as the form is static, 
+        // but we keep it empty or remove calls to it to avoid errors if called elsewhere.
       }
 
       // Update colors based on user selection
@@ -1027,6 +1097,10 @@
         profileImage.style.borderColor = siteData.accentColor;
         profilePlaceholder.style.borderColor = siteData.accentColor;
         profilePlaceholder.style.color = siteData.accentColor;
+        
+        // Update color picker samples
+        accentSample.style.backgroundColor = siteData.accentColor;
+        bgSample.style.backgroundColor = siteData.bgColor;
       }
 
       // Helper function to lighten a color
@@ -1102,6 +1176,7 @@
       }
 
       // Initialize the page
+      initializeInputs();
       renderLinks();
       updateColors();
     </script>

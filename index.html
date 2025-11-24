@@ -942,6 +942,11 @@
           const response = await publishToAPI(publishData);
           console.info(response);
 
+          if (!response.success) {
+            showNotification(response.metadata.message, "error");
+            return;
+          }
+
           // Show success message
           showNotification("¡Tu sitio ha sido publicado exitosamente! Tenés el link para editar el sitio en tu email.", "success");
           setTimeout(() => {

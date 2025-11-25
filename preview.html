@@ -45,14 +45,25 @@
       :root {
         --color-bg: #e6deca;
         --color-accent: #3d3f20;
-        --color-accent-light: oklch(from var(--color-accent) calc(l + 0.06) c h);
-        --color-accent-dark: oklch(from var(--color-accent) calc(l - 0.06) c h);
-        --color-bg-light: oklch(from var(--color-bg) calc(l + 0.06) c h);
-        --color-bg-dark: oklch(from var(--color-bg) calc(l - 0.06) c h);
+        --color-accent-light: oklch(from var(--color-accent) calc(l + 0.01) c h);
+        --color-accent-dark: oklch(from var(--color-accent) calc(l - 0.04) c h);
+        --color-bg-light: oklch(from var(--color-bg) calc(l + 0.01) c h);
+        --color-bg-dark: oklch(from var(--color-bg) calc(l - 0.04) c h);
         --radius: 10px;
         --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         --profile-image-size: 10rem;
         font-family: "Montserrat", system-ui, sans-serif;
+      }
+
+      .blurred-background::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url("/profile.webp");
+        background-size: cover;
+        filter: blur(1.5rem) opacity(0.3);
+        transform: scale(1.1); /* Scale up to hide blur edges */
+        z-index: -1;
       }
 
       scene-3d {
@@ -72,12 +83,7 @@
         > * {
           transform-style: preserve-3d;
           will-change: transform;
-
-          /* Visual example styling (you can remove this) */
-          background: white;
-          padding: 2rem;
-          border-radius: 20px;
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+          transition: transform 0.1s ease-out;
         }
       }
 
@@ -94,7 +100,7 @@
         align-items: center;
         justify-content: center;
         width: min(70%, 60ch);
-        min-height: min-content;
+        max-height: 80svh;
 
         > h1 {
           transform: var(--translate-medium);
@@ -103,6 +109,8 @@
         > p {
           transform: var(--translate-small);
           white-space: pre-wrap;
+          overflow: auto;
+          min-height: 6ch;
         }
 
         > img {
@@ -154,10 +162,11 @@
         }
       }
     </style>
+    <script type="module" src="/components/scene-3d.js"></script>
   </head>
   <body>
     <scene-3d>
-      <profile-card>
+      <profile-card class="blurred-background">
         <script type="application/ld+json">
           {
             "@context": "https://schema.org",
@@ -190,7 +199,7 @@
               "email": "tomyhayes@gmail.com",
               "displayName": "TOMYO",
               "profileImage": "/profile.webp",
-              "description": "Desarrollador de trasla.com.ar\n\nDe Mina Clavero, Traslasierra.",
+              "description": "Desarrollador de trasla.com.ar\n\nDe Mina Clavero, Traslasierra.\n\nDesarrollador de trasla.com.ar\n\nDe Mina Clavero, Traslasierra.\n\nDesarrollador de trasla.com.ar\n\nDe Mina Clavero, Traslasierra.\n\nDesarrollador de trasla.com.ar\n\nDe Mina Clave",
               "accentColor": "#3d3f20",
               "bgColor": "#e6deca",
               "links": [
@@ -207,27 +216,6 @@
         </script>
       </profile-card>
     </scene-3d>
-    <script>
-      const scene = document.querySelector("scene-3d");
-      const card = scene.querySelector("profile-card");
-      const translateAgressiveness = 10;
-
-      card.style.transform = `translateZ(100px)`;
-      document.addEventListener("pointermove", (e) => {
-        const x = (e.clientX / window.innerWidth - 0.5) * translateAgressiveness;
-        const y = (e.clientY / window.innerHeight - 0.5) * translateAgressiveness;
-
-        card.style.transform = `rotateX(${y * -1}deg) rotateY(${x}deg)`;
-      });
-
-      window.addEventListener("deviceorientation", (e) => {
-        const { beta, gamma } = e; // tilt front/back, left/right
-        const x = (gamma / translateAgressiveness) * 2;
-        const y = (beta / translateAgressiveness) * 2;
-
-        card.style.transform = `rotateX(${y * -1}deg) rotateY(${x}deg)`;
-      });
-    </script>
     <script type="module">
       customElements.define(
         "profile-card",

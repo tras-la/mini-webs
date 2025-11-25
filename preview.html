@@ -215,8 +215,8 @@
 
       window.addEventListener("deviceorientation", (e) => {
         const { beta, gamma } = e; // tilt front/back, left/right
-        const x = gamma / translateAgressiveness;
-        const y = beta / translateAgressiveness;
+        const x = (gamma / translateAgressiveness) * 2;
+        const y = (beta / translateAgressiveness) * 2;
 
         card.style.transform = `rotateX(${y * -1}deg) rotateY(${x}deg)`;
       });

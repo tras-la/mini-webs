@@ -43,12 +43,12 @@
       }
 
       :root {
-        --bg-color: #e6deca;
-        --accent-color: #3d3f20;
-        --color-accent-light: oklch(from var(--accent-color) calc(l + 0.2) c h);
-        --color-accent-dark: oklch(from var(--accent-color) calc(l - 0.2) c h);
-        --color-bg-light: oklch(from var(--bg-color) calc(l + 0.2) c h);
-        --color-bg-dark: oklch(from var(--bg-color) calc(l - 0.2) c h);
+        --color-bg: #e6deca;
+        --color-accent: #3d3f20;
+        --color-accent-light: oklch(from var(--color-accent) calc(l + 0.06) c h);
+        --color-accent-dark: oklch(from var(--color-accent) calc(l - 0.06) c h);
+        --color-bg-light: oklch(from var(--color-bg) calc(l + 0.06) c h);
+        --color-bg-dark: oklch(from var(--color-bg) calc(l - 0.06) c h);
         --radius: 10px;
         --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         --profile-image-size: 10rem;
@@ -56,6 +56,8 @@
       }
 
       scene-3d {
+        --translate-small: translateZ(1rem);
+        --translate-medium: translateZ(2rem);
         display: grid;
         place-items: center;
         height: 100%;
@@ -80,7 +82,7 @@
       }
 
       profile-card {
-        background-color: var(--bg-color);
+        background-color: var(--color-bg);
         border-radius: var(--radius);
         box-shadow: var(--shadow);
         padding: 2rem;
@@ -89,53 +91,58 @@
         min-height: 500px;
         display: flex;
         flex-direction: column;
+        align-items: center;
         justify-content: center;
+        width: min(70%, 60ch);
+        min-height: min-content;
 
         > h1 {
-          transform: translateZ(2rem);
+          transform: var(--translate-medium);
         }
 
         > p {
-          transform: translateZ(1rem);
+          transform: var(--translate-small);
+          white-space: pre-wrap;
         }
 
         > img {
           width: var(--profile-image-size);
           height: var(--profile-image-size);
           object-fit: cover;
-          margin-inline: auto;
           border-radius: 50%;
-          border: 2px solid currentColor;
-          background: var(--bg-color);
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          border: 2px solid var(--color-accent, currentColor);
+          background: var(--color-bg);
           transition: all 0.3s ease;
           font-size: 2.5rem;
-          transform: translateZ(1rem);
+          transform: var(--translate-small);
         }
 
         > .links {
           display: grid;
           justify-content: center;
           gap: 1rem;
-          transform: translateZ(2rem);
+          transform: var(--translate-small);
+          margin-top: 1rem;
 
           a {
             display: flex;
             justify-content: unset;
             align-items: center;
             gap: 1rem;
-            background-color: rgba(255, 255, 255, 0.3);
+            background-color: var(--color-bg-light);
             padding: 0.5rem 0.75rem 0.5rem 0.5rem;
             border-radius: 50px;
             transition: all 0.3s ease;
             cursor: pointer;
-            border: 1px solid currentColor;
-            color: var(--accent-color, currentColor);
+            border: 1px solid var(--color-accent, currentColor);
+            color: currentColor;
             text-decoration: none;
             font-weight: 600;
             letter-spacing: 0.05rem;
+
+            &:hover {
+              background-color: var(--color-bg-dark);
+            }
 
             img {
               aspect-ratio: 1;
@@ -183,7 +190,7 @@
               "email": "tomyhayes@gmail.com",
               "displayName": "TOMYO",
               "profileImage": "/profile.webp",
-              "description": "Developer of trasla.com.ar",
+              "description": "Desarrollador de trasla.com.ar\n\nDe Mina Clavero, Traslasierra.",
               "accentColor": "#3d3f20",
               "bgColor": "#e6deca",
               "links": [
@@ -227,6 +234,17 @@
         class ProfileCard extends HTMLElement {
           static dataScriptSelector = "script[type='application/ld+json']";
 
+          parseData() {
+            const json = this.shadowRoot.querySelector("slot[name='data']").assignedNodes()[0].textContent;
+            const rawData = JSON.parse(json);
+            const data = rawData["x-data"];
+
+            document.documentElement.style.setProperty("--color-accent", data.accentColor);
+            document.documentElement.style.setProperty("--color-bg", data.bgColor);
+
+            return data;
+          }
+
           connectedCallback() {
             this.attachShadow({ mode: "open" });
             this.shadowRoot.innerHTML = /* html */ `
@@ -250,14 +268,13 @@
           }
 
           render() {
+            const data = this.parseData();
+
             if (this.children.length > 1) {
               this.querySelectorAll(`:not(${ProfileCard.dataScriptSelector})`).forEach((child) => {
                 child.remove();
               });
             }
-            const json = this.shadowRoot.querySelector("slot[name='data']").assignedNodes()[0].textContent;
-            const rawData = JSON.parse(json);
-            const data = rawData["x-data"];
             this.insertAdjacentHTML(
               "afterbegin",
               /* html */ `
@@ -272,8 +289,7 @@
                 `
                   )
                   .join("")}
-              </nav>
-            `
+              </nav> `
             );
           }
         }

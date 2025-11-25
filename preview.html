@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#e6deca" />
+    <meta name="color-scheme" content="light only" />
+
+    <!-- START CONTENT_METADATA_BLOCK -->
+    <title>Mini Webs | Trasla</title>
+    <link rel="alternate" type="application/ld+json" href="/events/schema.jsonld" />
+    <link rel="canonical" property="og:url" href="https://eventos.trasla.com.ar" />
+    <meta name="description" content="Creá tu mini web con Trasla." />
+    <meta property="og:title" content="Trasla Webs" />
+    <meta property="og:description" content="Creá tu mini web con Trasla." />
+
+    <meta property="og:site_name" content="TRASLA WEBS" />
+    <meta property="og:locale" content="es-AR" />
+
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/icons/icon-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/icons/icon-512x512.png" />
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png" />
+
+    <!-- END CONTENT_METADATA_BLOCK -->
+    <style>
+      @font-face {
+        font-family: "Montserrat";
+        src: url("/assets/fonts/montserrat/Montserrat-VariableFont_wght.woff2") format("woff2");
+        font-weight: 100 900;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+        background-color: var(--color-bg-dark);
+        overflow: auto;
+      }
+
+      :root {
+        --bg-color: #e6deca;
+        --accent-color: #3d3f20;
+        --color-accent-light: oklch(from var(--accent-color) calc(l + 0.2) c h);
+        --color-accent-dark: oklch(from var(--accent-color) calc(l - 0.2) c h);
+        --color-bg-light: oklch(from var(--bg-color) calc(l + 0.2) c h);
+        --color-bg-dark: oklch(from var(--bg-color) calc(l - 0.2) c h);
+        --radius: 10px;
+        --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        --profile-image-size: 10rem;
+        font-family: "Montserrat", system-ui, sans-serif;
+      }
+
+      scene-3d {
+        display: grid;
+        place-items: center;
+        height: 100%;
+
+        /* The camera */
+        perspective: 50rem;
+
+        /* Isolate the 3D stack so effects don’t leak */
+        position: relative;
+        overflow: visible;
+
+        > * {
+          transform-style: preserve-3d;
+          will-change: transform;
+
+          /* Visual example styling (you can remove this) */
+          background: white;
+          padding: 2rem;
+          border-radius: 20px;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+      }
+
+      profile-card {
+        background-color: var(--bg-color);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        min-height: 500px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        > h1 {
+          transform: translateZ(2rem);
+        }
+
+        > p {
+          transform: translateZ(1rem);
+        }
+
+        > img {
+          width: var(--profile-image-size);
+          height: var(--profile-image-size);
+          object-fit: cover;
+          margin-inline: auto;
+          border-radius: 50%;
+          border: 2px solid currentColor;
+          background: var(--bg-color);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+          font-size: 2.5rem;
+          transform: translateZ(1rem);
+        }
+
+        > .links {
+          display: grid;
+          justify-content: center;
+          gap: 1rem;
+          transform: translateZ(2rem);
+
+          a {
+            display: flex;
+            justify-content: unset;
+            align-items: center;
+            gap: 1rem;
+            background-color: rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 0.75rem 0.5rem 0.5rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid currentColor;
+            color: var(--accent-color, currentColor);
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.05rem;
+
+            img {
+              aspect-ratio: 1;
+              width: 2rem;
+              object-fit: cover;
+              border-radius: 50%;
+            }
+          }
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <scene-3d>
+      <profile-card>
+        <script type="application/ld+json">
+          {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "TOMYO",
+            "image": "/profile.png",
+            "description": "Developer of trasla.com.ar",
+            "email": "tomyhayes@gmail.com",
+            "sameAs": ["https://instagram.com/tomashayes", "https://github.com/tomyo"],
+            "hasPart": {
+              "@type": "ItemList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "item": {
+                    "@type": "WebPage",
+                    "name": "Mi portfolio",
+                    "url": "https://tuportfolio.com",
+                    "image": "/profile.png"
+                  }
+                }
+              ]
+            },
+            "x-data": {
+              "id": "05b82438-2604-438c-b3a1-d7b437652946",
+              "createdAt": "2025-11-24T14:55:51.723Z",
+              "updatedAt": "2025-11-24T14:55:51.723Z",
+              "username": "tomyo2",
+              "email": "tomyhayes@gmail.com",
+              "displayName": "TOMYO",
+              "profileImage": "/profile.png",
+              "description": "Developer of trasla.com.ar",
+              "accentColor": "#3d3f20",
+              "bgColor": "#e6deca",
+              "links": [
+                { "label": "Instagram", "url": "https://instagram.com/tomashayes" },
+                { "label": "github", "url": "https://github.com/tomyo" },
+                {
+                  "label": "Mi portfolio",
+                  "url": "https://tuportfolio.com",
+                  "image": "/profile.png"
+                }
+              ]
+            }
+          }
+        </script>
+      </profile-card>
+    </scene-3d>
+    <script>
+      const scene = document.querySelector("scene-3d");
+      const card = scene.querySelector("profile-card");
+      const translateAgressiveness = 10;
+
+      card.style.transform = `translateZ(100px)`;
+      document.addEventListener("pointermove", (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * translateAgressiveness;
+        const y = (e.clientY / window.innerHeight - 0.5) * translateAgressiveness;
+
+        card.style.transform = `rotateX(${y * -1}deg) rotateY(${x}deg)`;
+      });
+
+      window.addEventListener("deviceorientation", (e) => {
+        const { beta, gamma } = e; // tilt front/back, left/right
+        const x = gamma / translateAgressiveness;
+        const y = beta / translateAgressiveness;
+
+        card.style.transform = `rotateX(${y * -1}deg) rotateY(${x}deg)`;
+      });
+    </script>
+    <script type="module">
+      customElements.define(
+        "profile-card",
+        class ProfileCard extends HTMLElement {
+          static dataScriptSelector = "script[type='application/ld+json']";
+
+          connectedCallback() {
+            this.attachShadow({ mode: "open" });
+            this.shadowRoot.innerHTML = /* html */ `
+              <style>
+                :host {
+                  display: block;
+                  padding: 1rem;
+                  border: 1px solid #ccc;
+                }
+                slot[name="data"] {
+                  display: none;
+                }
+              </style>
+              <slot></slot>
+              <slot name="data"></slot>
+            `;
+
+            // assing script type="application/ld+json" to data slot ;
+            this.querySelector(ProfileCard.dataScriptSelector).slot = "data";
+            this.render();
+          }
+
+          render() {
+            if (this.children.length > 1) {
+              this.querySelectorAll(`:not(${ProfileCard.dataScriptSelector})`).forEach((child) => {
+                child.remove();
+              });
+            }
+            const json = this.shadowRoot.querySelector("slot[name='data']").assignedNodes()[0].textContent;
+            const rawData = JSON.parse(json);
+            const data = rawData["x-data"];
+            this.insertAdjacentHTML(
+              "afterbegin",
+              /* html */ `
+              <img src="${data.profileImage}" alt="${data.displayName}" />
+              <h1>${data.displayName}</h1>
+              <p>${data.description}</p>
+              <nav class="links">
+                ${data.links
+                  .map(
+                    (link) => /* html */ `
+                  <a href="${link.url}"><img src="${link.image || "/link.svg"}" alt="${link.label}">${link.label}</a>
+                `
+                  )
+                  .join("")}
+              </nav>
+            `
+            );
+          }
+        }
+      );
+    </script>
+  </body>
+</html>
